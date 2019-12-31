@@ -1,18 +1,14 @@
-/*
-  ==============================================================================
-    FilePlayer.cpp
-  ==============================================================================
-*/
-
 #include "FilePlayer.h"
 
-FilePlayer::FilePlayer() : thread ("FilePlayThread")
+FilePlayer::FilePlayer() : thread("FilePlayThread")
 {
-    thread.startThread();
+	resamplingAudioSource = std::make_unique<ResamplingAudioSource>(&audioTransportSource, false);
+	thread.startThread();
 }
-
+	
 FilePlayer::~FilePlayer()
 {
+	resamplingAudioSource->releaseResources();
     audioTransportSource.setSource (nullptr);   //unload the current file
     thread.stopThread (100);
 }
@@ -67,16 +63,20 @@ void FilePlayer::loadFile(const File& newFile)
 //AudioSource
 void FilePlayer::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    audioTransportSource.prepareToPlay (samplesPerBlockExpected, sampleRate);
+    resamplingAudioSource->prepareToPlay (samplesPerBlockExpected, sampleRate);
 }
 
 void FilePlayer::releaseResources()
 {
-    audioTransportSource.releaseResources();
+    resamplingAudioSource->releaseResources();
 }
 
 void FilePlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
-    audioTransportSource.getNextAudioBlock (bufferToFill);
+    resamplingAudioSource->getNextAudioBlock (bufferToFill);
 }
 
+void FilePlayer::setPlaybackRate(double newRate)
+{
+	resamplingAudioSource->setResamplingRatio(newRate);
+}

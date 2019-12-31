@@ -24,6 +24,14 @@ FilePlayerGui::FilePlayerGui()
 	startPosSlider.setSliderStyle(Slider::LinearHorizontal);
 	startPosSlider.setColour(Slider::thumbColourId, Colours::red);
 	startPosSlider.setRange(0.0, 1.0);
+
+	//Pitch slider
+	pitchSlider.addListener(this);
+	addAndMakeVisible(pitchSlider);
+	pitchSlider.setSliderStyle(Slider::LinearHorizontal);
+	pitchSlider.setColour(Slider::thumbColourId, Colours::blue);
+	pitchSlider.setRange(0.1, 5.0);
+	pitchSlider.setValue(0.1);
 	
 	//setSize(1000, 1000);
 }
@@ -36,7 +44,7 @@ FilePlayerGui::~FilePlayerGui()
 //Component
 void FilePlayerGui::resized()
 {
-	const int NumElements = 3; //How many elements need to be mapped out 
+	const int NumElements = 4; //How many elements need to be mapped out 
 	
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
@@ -44,30 +52,28 @@ void FilePlayerGui::resized()
 
 	Rectangle<int> playButtArea = area.removeFromTop(heightPerEl);
 	Rectangle<int> fileChooseArea = area.removeFromTop(heightPerEl);
-	Rectangle<int> slider1Area = area.removeFromBottom(heightPerEl);
+	Rectangle<int> startSliderArea = area.removeFromBottom(heightPerEl);
+	Rectangle<int> pitchSliderArea = area.removeFromTop(heightPerEl);
 	
 	playButton.setBounds(playButtArea);
     fileChooser->setBounds (fileChooseArea);
-	startPosSlider.setBounds(slider1Area);
+	startPosSlider.setBounds(startSliderArea);
+	pitchSlider.setBounds(pitchSliderArea);
 }
 
 void FilePlayerGui::paint(Graphics& g)
 {
-	/*Rectangle<int> area = getLocalBounds();
-	g.setColour(Colours::aqua);
-	g.fillRect(area);*/
+
 }
 
 //Button Listener
 void FilePlayerGui::buttonClicked (Button* button)
 {
-	DBG(startPosSlider.getValue());
-	filePlayer->setPosition(startPosSlider.getValue());
-
+	//DBG(startPosSlider.getValue());
     if (filePlayer != nullptr && button == &playButton)
     {
-		filePlayer->setPosition(startPosSlider.getValue());
         filePlayer->setPlaying( ! filePlayer->isPlaying());
+		filePlayer->setPosition(startPosSlider.getValue());
     }
 }
 
@@ -99,6 +105,14 @@ void FilePlayerGui::filenameComponentChanged (FilenameComponent* fileComponentTh
 //Slider Listener
 void FilePlayerGui::sliderValueChanged(Slider* slider)
 {
-	DBG(startPosSlider.getValue());
-	filePlayer->setPosition(startPosSlider.getValue());
+	if (slider == &startPosSlider)
+	{
+		DBG(startPosSlider.getValue());
+		filePlayer->setPosition(startPosSlider.getValue());
+	}
+	if (slider == &pitchSlider)
+	{
+		DBG(pitchSlider.getValue());
+		filePlayer->setPlaybackRate(pitchSlider.getValue());
+	}
 }

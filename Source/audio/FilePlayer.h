@@ -1,9 +1,3 @@
-/*
-  ==============================================================================
-    FilePlayer.h
-  ==============================================================================
-*/
-
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
@@ -33,6 +27,8 @@ public:
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override;
 
 	void setPosition(double newPosition);
+
+	void setPlaybackRate(double newRate);
 	
 
 private:
@@ -40,4 +36,6 @@ private:
     AudioTransportSource audioTransportSource;	        // this controls the playback of a positionable audio stream, handling the
                                                         // starting/stopping and sample-rate conversion
     TimeSliceThread thread;                             //thread for the transport source
+	std::unique_ptr<ResamplingAudioSource> resamplingAudioSource;
+
 };

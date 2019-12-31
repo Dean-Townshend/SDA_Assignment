@@ -38,6 +38,6 @@ private:
     std::unique_ptr<FilenameComponent> fileChooser;
     
     FilePlayer* filePlayer {nullptr};
-
 	Slider startPosSlider;
+	Slider pitchSlider;
 };
