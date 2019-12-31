@@ -31,7 +31,10 @@ public:
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     void releaseResources() override;
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override;
-    
+
+	void setPosition(double newPosition);
+	
+
 private:
     std::unique_ptr<AudioFormatReaderSource> currentAudioFileSource;    //reads audio from the file
     AudioTransportSource audioTransportSource;	        // this controls the playback of a positionable audio stream, handling the

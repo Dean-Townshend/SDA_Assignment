@@ -1,9 +1,3 @@
-/*
-  ==============================================================================
-    FilePlayerGui.h
-  ==============================================================================
-*/
-
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
@@ -13,7 +7,7 @@
 class FilePlayerGui :   public  Component,
                         private Button::Listener,
                         private FilenameComponentListener,
-						private Slider::Listener 
+						private Slider::Listener
 {
 public:
     /** constructor - receives a reference to a FilePlayer object to control */
@@ -45,5 +39,5 @@ private:
     
     FilePlayer* filePlayer {nullptr};
 
-	Slider slider1;
+	Slider startPosSlider;
 };

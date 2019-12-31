@@ -17,6 +17,11 @@ FilePlayer::~FilePlayer()
     thread.stopThread (100);
 }
 
+void FilePlayer::setPosition(double newPosition)
+{
+	audioTransportSource.setPosition(audioTransportSource.getLengthInSeconds() * newPosition);
+}
+
 void FilePlayer::setPlaying (bool newState)
 {
     if(newState == true)
@@ -74,3 +79,4 @@ void FilePlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
     audioTransportSource.getNextAudioBlock (bufferToFill);
 }
+

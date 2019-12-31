@@ -2,9 +2,11 @@
 
 FilePlayerGui::FilePlayerGui()
 {
+	//Button
     playButton.addListener (this);
     addAndMakeVisible (playButton);
     
+	//File Chooser
     AudioFormatManager formatManager;
     formatManager.registerBasicFormats();
     fileChooser = std::make_unique<FilenameComponent> ("audiofile",
@@ -16,12 +18,13 @@ FilePlayerGui::FilePlayerGui()
     fileChooser->addListener (this);
     addAndMakeVisible (fileChooser.get());
 
-	//The slider
-	addAndMakeVisible(slider1);
-	slider1.setSliderStyle(Slider::LinearHorizontal);
-	slider1.setColour(Slider::thumbColourId, Colours::red);
-
-
+	//Start slider
+	startPosSlider.addListener(this);
+	addAndMakeVisible(startPosSlider);
+	startPosSlider.setSliderStyle(Slider::LinearHorizontal);
+	startPosSlider.setColour(Slider::thumbColourId, Colours::red);
+	startPosSlider.setRange(0.0, 1.0);
+	
 	//setSize(1000, 1000);
 }
 
@@ -33,21 +36,19 @@ FilePlayerGui::~FilePlayerGui()
 //Component
 void FilePlayerGui::resized()
 {
-	const int NumElements = 3; 
+	const int NumElements = 3; //How many elements need to be mapped out 
 	
-	Rectangle<int> area = getLocalBounds(); //
+	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
-	int heightPerEl = area.getHeight() / NumElements;
+	int heightPerEl = area.getHeight() / NumElements; 
 
 	Rectangle<int> playButtArea = area.removeFromTop(heightPerEl);
 	Rectangle<int> fileChooseArea = area.removeFromTop(heightPerEl);
 	Rectangle<int> slider1Area = area.removeFromBottom(heightPerEl);
-
-	
 	
 	playButton.setBounds(playButtArea);
     fileChooser->setBounds (fileChooseArea);
-	slider1.setBounds(slider1Area);
+	startPosSlider.setBounds(slider1Area);
 }
 
 void FilePlayerGui::paint(Graphics& g)
@@ -60,15 +61,14 @@ void FilePlayerGui::paint(Graphics& g)
 //Button Listener
 void FilePlayerGui::buttonClicked (Button* button)
 {
+	DBG(startPosSlider.getValue());
+	filePlayer->setPosition(startPosSlider.getValue());
+
     if (filePlayer != nullptr && button == &playButton)
     {
+		filePlayer->setPosition(startPosSlider.getValue());
         filePlayer->setPlaying( ! filePlayer->isPlaying());
     }
-}
-
-//Slider Listener
-void FilePlayerGui::sliderValueChanged(Slider* slider)
-{
 }
 
 void FilePlayerGui::setFilePlayer (FilePlayer* fp)
@@ -94,4 +94,11 @@ void FilePlayerGui::filenameComponentChanged (FilenameComponent* fileComponentTh
                                          "Couldn't open file!\n\n");
         }
     }
+}
+
+//Slider Listener
+void FilePlayerGui::sliderValueChanged(Slider* slider)
+{
+	DBG(startPosSlider.getValue());
+	filePlayer->setPosition(startPosSlider.getValue());
 }
