@@ -5,7 +5,7 @@ Audio::Audio()
     audioDeviceManager.initialiseWithDefaultDevices (1, 2); //1 inputs, 2 outputs
     
     //set the filePlayer as the audio source
-    audioSourcePlayer.setSource (&filePlayer);
+    audioSourcePlayer.setSource (&filePlayer[0]);
     
     audioDeviceManager.addMidiInputCallback (String(), this);
     audioDeviceManager.addAudioCallback (this);
@@ -22,7 +22,7 @@ Audio::~Audio()
 
 FilePlayer* Audio::getFilePlayer()
 {
-    return &filePlayer;
+	return &filePlayer[0];
 }
 
 void Audio::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message)

@@ -2,6 +2,7 @@
 
 #include "../../JuceLibraryCode/JuceHeader.h"
 #include "FilePlayer.h"
+#include <array>
 
 /** Class containing all audio processes */
 
@@ -23,6 +24,7 @@ public:
 	/** returns a pointer to the file player */
 	FilePlayer* getFilePlayer();
 
+
 	/** Returns the audio device manager, don't keep a copy of it! */
 	AudioDeviceManager& getAudioDeviceManager() { return audioDeviceManager; }
 
@@ -38,6 +40,8 @@ public:
 private:
 	AudioDeviceManager audioDeviceManager;
 	AudioSourcePlayer audioSourcePlayer;
+	
 	//FilePlayer filePlayer;
-	typedef std::array <FilePlayer, sizeof(NumberOfFilePlayers)> filePlayer;
+	
+	std::array <FilePlayer, sizeof(NumberOfFilePlayers)> filePlayer;
 };

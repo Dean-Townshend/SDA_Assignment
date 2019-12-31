@@ -1,11 +1,3 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-  ==============================================================================
-*/
-
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
@@ -50,7 +42,9 @@ public:
     
 private:
     Audio& audio;
-    FilePlayerGui filePlayerGui;
+    
+	//FilePlayerGui filePlayerGui;
+	std::array <FilePlayerGui, sizeof(Audio::NumberOfFilePlayers)> filePlayerGui;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

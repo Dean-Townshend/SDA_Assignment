@@ -2,6 +2,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "../audio/FilePlayer.h"
+#include "../audio/Audio.h"
 
 /** Gui for the FilePlayer class */
 class FilePlayerGui :   public  Component,
@@ -37,8 +38,10 @@ private:
     TextButton playButton {">"};
     std::unique_ptr<FilenameComponent> fileChooser;
     
-    //FilePlayer* filePlayer {nullptr};
-	typedef std::array <FilePlayer*, sizeof(NumberOfFilePlayers) > filePlayer;
+
+	FilePlayer* filePlayer {nullptr};
+
+	//std::array <FilePlayer*, sizeof(Audio::NumberOfFilePlayers) > &filePlayer = { nullptr, nullptr };
 
 	Slider startPosSlider;
 	Slider pitchSlider;
