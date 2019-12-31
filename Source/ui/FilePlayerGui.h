@@ -37,7 +37,9 @@ private:
     TextButton playButton {">"};
     std::unique_ptr<FilenameComponent> fileChooser;
     
-    FilePlayer* filePlayer {nullptr};
+    //FilePlayer* filePlayer {nullptr};
+	typedef std::array <FilePlayer*, sizeof(NumberOfFilePlayers) > filePlayer;
+
 	Slider startPosSlider;
 	Slider pitchSlider;
 };
