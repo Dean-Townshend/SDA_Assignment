@@ -1,6 +1,11 @@
+#pragma once
 #include "FilePlayerGui.h"
+#include "WaveformGui.h"
 
-FilePlayerGui::FilePlayerGui()
+FilePlayerGui::FilePlayerGui(): thumbnailCache(5),
+thumbnailComp(512, formatManager, thumbnailCache),
+positionOverlay(transportSource)
+
 {
 	//Button
     playButton.addListener (this);
@@ -33,7 +38,8 @@ FilePlayerGui::FilePlayerGui()
 	pitchSlider.setRange(0.1, 5.0);
 	pitchSlider.setValue(0.1);
 	
-	//setSize(1000, 1000);
+	addAndMakeVisible(&thumbnailComp);
+	addAndMakeVisible(&positionOverlay);
 }
 
 FilePlayerGui::~FilePlayerGui()
@@ -48,7 +54,14 @@ void FilePlayerGui::resized()
 	
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
-	int heightPerEl = area.getHeight() / NumElements; 
+	int heightPerEl = area.getHeight() / NumElements;
+
+	Rectangle<int> controlArea = area.removeFromRight(area.getWidth()/2);
+
+	//Rectangle<int> waveformThumb = controlArea.removeFromTop(controlArea.getHeight() / 2);
+
+	thumbnailComp.setBounds(controlArea);
+	positionOverlay.setBounds(controlArea);
 
 	Rectangle<int> playButtArea = area.removeFromTop(heightPerEl);
 	Rectangle<int> fileChooseArea = area.removeFromTop(heightPerEl);
@@ -92,11 +105,12 @@ void FilePlayerGui::filenameComponentChanged (FilenameComponent* fileComponentTh
         if(filePlayer != nullptr && audioFile.existsAsFile())
         {
             filePlayer->loadFile(audioFile);
+			thumbnailComp.setFile(audioFile);
         }
         else
         {
             AlertWindow::showMessageBox (AlertWindow::WarningIcon,
-                                         "sdaTransport",
+                                         "Transport",
                                          "Couldn't open file!\n\n");
         }
     }

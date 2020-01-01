@@ -31,10 +31,10 @@ void MainComponent::resized()
 	Rectangle<int> padArea = area.removeFromLeft(area.getWidth()/2);
 	Rectangle<int> controlArea = area.removeFromRight(area.getWidth());
 
-	Rectangle<int> waveformThumb = controlArea.removeFromTop(controlArea.getHeight() / 2);
+	//Rectangle<int> waveformThumb = controlArea.removeFromTop(controlArea.getHeight() / 2);
 
-	thumbnailComp.setBounds(waveformThumb);
-	positionOverlay.setBounds(waveformThumb);
+	//thumbnailComp.setBounds(waveformThumb);
+	//positionOverlay.setBounds(waveformThumb);
 
 	int heightPerEl = area.getHeight() / NumElements;
 

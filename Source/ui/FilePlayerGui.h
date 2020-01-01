@@ -3,6 +3,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "../audio/FilePlayer.h"
 #include "../audio/Audio.h"
+#include "WaveformGui.h"
 
 /** Gui for the FilePlayer class */
 class FilePlayerGui :   public  Component,
@@ -44,7 +45,7 @@ private:
 
 	//void changeListenerCallback(ChangeBroadcaster* source) override;
     
-    TextButton playButton {">"};
+    TextButton playButton {"Play/Pause"};
     std::unique_ptr<FilenameComponent> fileChooser;
     
 
@@ -54,5 +55,11 @@ private:
 
 	Slider startPosSlider;
 	Slider pitchSlider;
+
+
+	AudioTransportSource transportSource;
+	AudioThumbnailCache thumbnailCache;
+	SimpleThumbnailComponent thumbnailComp;
+	SimplePositionOverlay positionOverlay;
 
 };
