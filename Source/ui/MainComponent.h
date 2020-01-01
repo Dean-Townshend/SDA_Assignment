@@ -3,6 +3,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "../audio/Audio.h"
 #include "FilePlayerGui.h"
+#include "WaveformGui.h"
 
 //==============================================================================
 /*
@@ -15,7 +16,7 @@ class MainComponent   : public Component,
 public:
     //==============================================================================
     /** Constructor */
-    MainComponent (Audio& a);
+	MainComponent(Audio& a);
 
     /** Destructor */
     ~MainComponent();
@@ -46,6 +47,12 @@ private:
 	//FilePlayerGui filePlayerGui;
 	std::array <FilePlayerGui, sizeof(Audio::NumberOfFilePlayers)> filePlayerGui;
 	
+
+	AudioFormatManager formatManager;
+	AudioTransportSource transportSource;
+	AudioThumbnailCache thumbnailCache;
+	SimpleThumbnailComponent thumbnailComp;
+	SimplePositionOverlay positionOverlay;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

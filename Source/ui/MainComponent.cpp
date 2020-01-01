@@ -1,15 +1,20 @@
 #include "MainComponent.h"
 
 //==============================================================================
-MainComponent::MainComponent (Audio& a) :   audio (a)
+MainComponent::MainComponent (Audio& a) :   audio (a), thumbnailCache(5),
+thumbnailComp(512, formatManager, thumbnailCache),
+positionOverlay(transportSource)
 {
 	for (int i = 0; i < Audio::NumberOfFilePlayers; i++)
 	{
 		filePlayerGui[i].setFilePlayer(audio.getFilePlayer(i));
 		addAndMakeVisible(filePlayerGui[i]);
 	}	
+
+	addAndMakeVisible(&thumbnailComp);
+	addAndMakeVisible(&positionOverlay);
     
-    setSize (400, 400);
+    setSize (600, 600);
 }
 
 MainComponent::~MainComponent()
@@ -24,7 +29,13 @@ void MainComponent::resized()
 
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 	Rectangle<int> padArea = area.removeFromLeft(area.getWidth()/2);
-	
+	Rectangle<int> controlArea = area.removeFromRight(area.getWidth());
+
+	Rectangle<int> waveformThumb = controlArea.removeFromTop(controlArea.getHeight() / 2);
+
+	thumbnailComp.setBounds(waveformThumb);
+	positionOverlay.setBounds(waveformThumb);
+
 	int heightPerEl = area.getHeight() / NumElements;
 
 	std::array<Rectangle<int>, Audio::NumberOfFilePlayers> guiComp;
@@ -34,17 +45,6 @@ void MainComponent::resized()
 		guiComp[i] = padArea.removeFromTop(heightPerEl);
 		filePlayerGui[i].setBounds(guiComp[i]);
 	}
-	
-
-	/*Rectangle<int> gui1 = area.removeFromTop(heightPerEl);
-	Rectangle<int> gui2 = area.removeFromTop(heightPerEl);
-	Rectangle<int> gui3 = area.removeFromTop(heightPerEl);
-	Rectangle<int> gui4 = area.removeFromTop(heightPerEl);
-
-	filePlayerGui[0].setBounds(gui1);
-	filePlayerGui[1].setBounds(gui2);
-	filePlayerGui[2].setBounds(gui3);
-	filePlayerGui[3].setBounds(gui4);*/
 	
 }
 
