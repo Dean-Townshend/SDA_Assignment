@@ -7,7 +7,7 @@ FilePlayerGui::FilePlayerGui()
     addAndMakeVisible (playButton);
     
 	//File Chooser
-    AudioFormatManager formatManager;
+	
     formatManager.registerBasicFormats();
     fileChooser = std::make_unique<FilenameComponent> ("audiofile",
                                                        File(),
@@ -116,3 +116,4 @@ void FilePlayerGui::sliderValueChanged(Slider* slider)
 		filePlayer->setPlaybackRate(pitchSlider.getValue());
 	}
 }
+

@@ -6,8 +6,8 @@
 
 /** Class containing all audio processes */
 
-class Audio : public MidiInputCallback,
-	public AudioIODeviceCallback
+class Audio : public MidiInputCallback, 
+					 AudioIODeviceCallback
 {
 public:
 	enum
@@ -23,7 +23,6 @@ public:
 
 	/** returns a pointer to the file player */
 	FilePlayer* getFilePlayer(int playerNum);
-
 
 	/** Returns the audio device manager, don't keep a copy of it! */
 	AudioDeviceManager& getAudioDeviceManager() { return audioDeviceManager; }

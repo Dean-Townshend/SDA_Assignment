@@ -23,14 +23,15 @@ void MainComponent::resized()
 	const int NumElements = Audio:: NumberOfFilePlayers; //How many elements need to be mapped out 
 
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
-
+	Rectangle<int> padArea = area.removeFromLeft(area.getWidth()/2);
+	
 	int heightPerEl = area.getHeight() / NumElements;
 
 	std::array<Rectangle<int>, Audio::NumberOfFilePlayers> guiComp;
 
 	for (int i = 0; i < Audio::NumberOfFilePlayers; i++)
 	{
-		guiComp[i] = area.removeFromTop(heightPerEl);
+		guiComp[i] = padArea.removeFromTop(heightPerEl);
 		filePlayerGui[i].setBounds(guiComp[i]);
 	}
 	

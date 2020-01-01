@@ -11,6 +11,8 @@ class FilePlayerGui :   public  Component,
 						private Slider::Listener
 {
 public:
+	
+
     /** constructor - receives a reference to a FilePlayer object to control */
     FilePlayerGui();
     
@@ -25,8 +27,13 @@ public:
 
 	void paint(Graphics& g) override;
 
+	
+
 private:
-    //Button Listener
+	
+	AudioFormatManager formatManager;
+
+	//Button Listener
     void buttonClicked (Button* button) override;
 
 	//Slider Listener
@@ -34,6 +41,8 @@ private:
     
     //FilenameComponentListener
     void filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged) override;
+
+	//void changeListenerCallback(ChangeBroadcaster* source) override;
     
     TextButton playButton {">"};
     std::unique_ptr<FilenameComponent> fileChooser;
@@ -45,4 +54,5 @@ private:
 
 	Slider startPosSlider;
 	Slider pitchSlider;
+
 };
