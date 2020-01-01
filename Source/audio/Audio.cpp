@@ -4,8 +4,13 @@ Audio::Audio()
 {
     audioDeviceManager.initialiseWithDefaultDevices (1, 2); //1 inputs, 2 outputs
     
+	for (int i = 0; i < NumberOfFilePlayers; i++)
+	{
+		mixer.addInputSource(&filePlayer[i], false);
+	}
+
     //set the filePlayer as the audio source
-    audioSourcePlayer.setSource (&filePlayer[0]);
+    audioSourcePlayer.setSource (&mixer);
     
     audioDeviceManager.addMidiInputCallback (String(), this);
     audioDeviceManager.addAudioCallback (this);
@@ -18,11 +23,13 @@ Audio::~Audio()
     
     //remove the file player from the source
     audioSourcePlayer.setSource (nullptr);
+
+	mixer.removeAllInputs();
 }
 
-FilePlayer* Audio::getFilePlayer()
+FilePlayer* Audio::getFilePlayer(int playerNum)
 {
-	return &filePlayer[0];
+	return &filePlayer[playerNum];
 }
 
 void Audio::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message)

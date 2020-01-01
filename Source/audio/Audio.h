@@ -12,7 +12,7 @@ class Audio : public MidiInputCallback,
 public:
 	enum
 	{
-		NumberOfFilePlayers = 2
+		NumberOfFilePlayers = 4
 	};
 
 	/** Constructor */
@@ -22,7 +22,7 @@ public:
 	~Audio();
 
 	/** returns a pointer to the file player */
-	FilePlayer* getFilePlayer();
+	FilePlayer* getFilePlayer(int playerNum);
 
 
 	/** Returns the audio device manager, don't keep a copy of it! */
@@ -41,7 +41,7 @@ private:
 	AudioDeviceManager audioDeviceManager;
 	AudioSourcePlayer audioSourcePlayer;
 	
-	//FilePlayer filePlayer;
-	
 	std::array <FilePlayer, sizeof(NumberOfFilePlayers)> filePlayer;
+
+	MixerAudioSource mixer;
 };

@@ -5,7 +5,7 @@ MainComponent::MainComponent (Audio& a) :   audio (a)
 {
 	for (int i = 0; i < Audio::NumberOfFilePlayers; i++)
 	{
-		filePlayerGui[i].setFilePlayer(audio.getFilePlayer());
+		filePlayerGui[i].setFilePlayer(audio.getFilePlayer(i));
 		addAndMakeVisible(filePlayerGui[i]);
 	}	
     
@@ -20,17 +20,30 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::resized()
 {
-	const int NumElements = 2; //How many elements need to be mapped out 
+	const int NumElements = Audio:: NumberOfFilePlayers; //How many elements need to be mapped out 
 
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
 	int heightPerEl = area.getHeight() / NumElements;
 
-	Rectangle<int> gui1 = area.removeFromTop(heightPerEl);
+	std::array<Rectangle<int>, Audio::NumberOfFilePlayers> guiComp;
+
+	for (int i = 0; i < Audio::NumberOfFilePlayers; i++)
+	{
+		guiComp[i] = area.removeFromTop(heightPerEl);
+		filePlayerGui[i].setBounds(guiComp[i]);
+	}
+	
+
+	/*Rectangle<int> gui1 = area.removeFromTop(heightPerEl);
 	Rectangle<int> gui2 = area.removeFromTop(heightPerEl);
+	Rectangle<int> gui3 = area.removeFromTop(heightPerEl);
+	Rectangle<int> gui4 = area.removeFromTop(heightPerEl);
 
 	filePlayerGui[0].setBounds(gui1);
 	filePlayerGui[1].setBounds(gui2);
+	filePlayerGui[2].setBounds(gui3);
+	filePlayerGui[3].setBounds(gui4);*/
 	
 }
 
