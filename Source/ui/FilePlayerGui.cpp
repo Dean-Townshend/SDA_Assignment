@@ -4,7 +4,6 @@
 
 FilePlayerGui::FilePlayerGui(): positionOverlay(), thumbnailCache(5),
 thumbnailComp(512, formatManager, thumbnailCache)
-
 {
 	//Button
     playButton.addListener (this);
@@ -25,14 +24,14 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	startPosSlider.addListener(this);
 	addAndMakeVisible(startPosSlider);
 	startPosSlider.setSliderStyle(Slider::LinearHorizontal);
-	startPosSlider.setColour(Slider::thumbColourId, Colours::red);
+	startPosSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
 	startPosSlider.setRange(0.0, 1.0);
 
 	//Pitch slider
 	pitchSlider.addListener(this);
 	addAndMakeVisible(pitchSlider);
 	pitchSlider.setSliderStyle(Slider::LinearHorizontal);
-	pitchSlider.setColour(Slider::thumbColourId, Colours::blue);
+	pitchSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
 	pitchSlider.setRange(0.1, 5.0);
 	pitchSlider.setValue(0.1);
 
@@ -56,23 +55,26 @@ void FilePlayerGui::resized()
 {
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
-	const int NumElements = 4; //How many elements need to be mapped out 
+	const int NumElements = 3; //How many elements need to be mapped out 
 	int heightPerEl = area.getHeight() / NumElements;
 
 	Rectangle<int> controlArea = area.removeFromLeft(area.getWidth()/2);
 	Rectangle<int> waveformArea = area;
 
-	positionOverlay.setBounds(waveformArea);
-	thumbnailComp.setBounds(waveformArea);
+	Rectangle<int> waveform = waveformArea.removeFromTop(waveformArea.getHeight() * 0.80);
+	Rectangle<int> waveformSlider = waveformArea;
+
+	positionOverlay.setBounds(waveform);
+	thumbnailComp.setBounds(waveform);
 	
 	Rectangle<int> playButtArea = controlArea.removeFromTop(heightPerEl);
 	Rectangle<int> fileChooseArea = controlArea.removeFromTop(heightPerEl);
-	Rectangle<int> startSliderArea = controlArea.removeFromBottom(heightPerEl);
-	Rectangle<int> pitchSliderArea = controlArea.removeFromTop(heightPerEl);
+	Rectangle<int> pitchSliderArea = controlArea.removeFromBottom(heightPerEl);
+	//Rectangle<int> startSliderArea = controlArea.removeFromBottom(heightPerEl);
 	
 	playButton.setBounds(playButtArea);
     fileChooser->setBounds (fileChooseArea);
-	startPosSlider.setBounds(startSliderArea);
+	startPosSlider.setBounds(waveformArea);
 	pitchSlider.setBounds(pitchSliderArea);
 }
 

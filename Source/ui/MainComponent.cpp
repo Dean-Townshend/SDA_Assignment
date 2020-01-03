@@ -32,8 +32,7 @@ void MainComponent::resized()
 	{
 		guiComp[i] = GuiArea.removeFromTop(heightPerEl);
 		filePlayerGui[i].setBounds(guiComp[i]);
-	}
-	
+	}	
 }
 
 //MenuBarCallbacks==============================================================
@@ -61,7 +60,7 @@ void MainComponent::menuItemSelected (int menuItemID, int topLevelMenuIndex)
                                                             2, 2, 2, 2, true, true, true, false);
             audioSettingsComp.setSize (450, 350);
             DialogWindow::showModalDialog ("Audio Settings",
-                                           &audioSettingsComp, this, Colours::lightgrey, true);
+                                           &audioSettingsComp, this, Colours::dimgrey, true);
         }
     }
 }

@@ -1,13 +1,3 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-	ftuf
-    It contains the basic startup code for a JUCE application.
-
-  ==============================================================================
-*/
-
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ui/MainComponent.h"
 #include "audio/Audio.h"
@@ -62,7 +52,7 @@ public:
     {
     public:
         MainWindow (String name, Audio& audio)  : DocumentWindow (name,
-                                                    Colours::lightgrey,
+                                                    Colours::grey,
                                                     DocumentWindow::allButtons)
         {
             setUsingNativeTitleBar (true);
@@ -73,7 +63,7 @@ public:
             
             centreWithSize (getWidth(), getHeight());
             setVisible (true);
-			//setResizable(true, true);
+			setResizable(true, true);
         }
 
         void closeButtonPressed() override
