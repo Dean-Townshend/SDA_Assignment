@@ -61,8 +61,7 @@ void SimpleThumbnailComponent::thumbnailChanged()
 
 /******************************Position Overlay*****************************************/
 
-SimplePositionOverlay::SimplePositionOverlay(AudioTransportSource& transportSourceToUse)
-											: transportSource(transportSourceToUse)
+SimplePositionOverlay::SimplePositionOverlay()
 {
 	startTimer(40);
 }
@@ -72,34 +71,53 @@ SimplePositionOverlay::~SimplePositionOverlay()
 
 }
 
+void SimplePositionOverlay::setPosition(double pos)
+{
+	position = pos;
+}
+
 void SimplePositionOverlay::paint(Graphics& g)
 {
-	auto duration = (float)transportSource.getLengthInSeconds();
 
-	if (duration > 0.0)
+	if (position > 0.0)
 	{
-		auto audioPosition = (float)transportSource.getCurrentPosition();
-		auto drawPosition = (audioPosition / duration) * getWidth();
+		Rectangle<int> k = getLocalBounds();
+		Rectangle<float> b = k.toFloat();
 
+		//g.fillAll(Colours::red);
+
+		g.setColour(Colours::red);
+
+		//g.fillRect(b);
+
+		//g.fillAll(Colours::blue);
+		//g.fillRect(b);
+
+
+		auto drawPosition = position * getWidth();
+
+		g.setColour(Colours::red);
+		g.drawLine(drawPosition, 0.0f, drawPosition, (float)getHeight(), 1.0f);
+		//g.drawRect(drawPosition, 0.0f, 0.0f, (float)getHeight(), 0.5f);
+		
+	}
+
+	/*if (position > 0.0)
+	{
 		g.setColour(Colours::green);
-		g.drawLine(drawPosition, 0.0f, drawPosition, (float)getHeight(), 2.0f);
-	}
+
+		Rectangle<int> p = getLocalBounds();
+
+		int h = p.getHeight();
+		int b = p.getBottom();
+		int w = p.getWidth();
+
+		auto drawPosition = (float)w * position;
+
+		g.drawRect(drawPosition, 0, 1, h, 4);
+
+		DBG(position);
+	}*/
+
 }
 
-void SimplePositionOverlay::mouseDown(const MouseEvent& event)
-{
-	auto duration = transportSource.getLengthInSeconds();
-
-	if (duration > 0.0)
-	{
-		auto clickPosition = event.position.x;
-		auto audioPosition = (clickPosition / getWidth()) * duration;
-
-		transportSource.setPosition(audioPosition);
-	}
-}
-
-void SimplePositionOverlay::timerCallback()
-{
-	repaint();
-}

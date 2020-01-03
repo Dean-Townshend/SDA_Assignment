@@ -2,9 +2,8 @@
 #include "FilePlayerGui.h"
 #include "WaveformGui.h"
 
-FilePlayerGui::FilePlayerGui(): thumbnailCache(5),
-thumbnailComp(512, formatManager, thumbnailCache),
-positionOverlay(transportSource)
+FilePlayerGui::FilePlayerGui(): positionOverlay(), thumbnailCache(5),
+thumbnailComp(512, formatManager, thumbnailCache)
 
 {
 	//Button
@@ -12,7 +11,6 @@ positionOverlay(transportSource)
     addAndMakeVisible (playButton);
     
 	//File Chooser
-	
     formatManager.registerBasicFormats();
     fileChooser = std::make_unique<FilenameComponent> ("audiofile",
                                                        File(),
@@ -37,7 +35,8 @@ positionOverlay(transportSource)
 	pitchSlider.setColour(Slider::thumbColourId, Colours::blue);
 	pitchSlider.setRange(0.1, 5.0);
 	pitchSlider.setValue(0.1);
-	
+
+	//Waveform view
 	addAndMakeVisible(&thumbnailComp);
 	addAndMakeVisible(&positionOverlay);
 }
@@ -47,26 +46,29 @@ FilePlayerGui::~FilePlayerGui()
     
 }
 
+void FilePlayerGui::paint(Graphics& g)
+{
+
+}
+
 //Component
 void FilePlayerGui::resized()
 {
-	const int NumElements = 4; //How many elements need to be mapped out 
-	
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
+	const int NumElements = 4; //How many elements need to be mapped out 
 	int heightPerEl = area.getHeight() / NumElements;
 
-	Rectangle<int> controlArea = area.removeFromRight(area.getWidth()/2);
+	Rectangle<int> controlArea = area.removeFromLeft(area.getWidth()/2);
+	Rectangle<int> waveformArea = area;
 
-	//Rectangle<int> waveformThumb = controlArea.removeFromTop(controlArea.getHeight() / 2);
-
-	thumbnailComp.setBounds(controlArea);
-	positionOverlay.setBounds(controlArea);
-
-	Rectangle<int> playButtArea = area.removeFromTop(heightPerEl);
-	Rectangle<int> fileChooseArea = area.removeFromTop(heightPerEl);
-	Rectangle<int> startSliderArea = area.removeFromBottom(heightPerEl);
-	Rectangle<int> pitchSliderArea = area.removeFromTop(heightPerEl);
+	positionOverlay.setBounds(waveformArea);
+	thumbnailComp.setBounds(waveformArea);
+	
+	Rectangle<int> playButtArea = controlArea.removeFromTop(heightPerEl);
+	Rectangle<int> fileChooseArea = controlArea.removeFromTop(heightPerEl);
+	Rectangle<int> startSliderArea = controlArea.removeFromBottom(heightPerEl);
+	Rectangle<int> pitchSliderArea = controlArea.removeFromTop(heightPerEl);
 	
 	playButton.setBounds(playButtArea);
     fileChooser->setBounds (fileChooseArea);
@@ -74,20 +76,25 @@ void FilePlayerGui::resized()
 	pitchSlider.setBounds(pitchSliderArea);
 }
 
-void FilePlayerGui::paint(Graphics& g)
-{
-
-}
 
 //Button Listener
 void FilePlayerGui::buttonClicked (Button* button)
 {
-	//DBG(startPosSlider.getValue());
     if (filePlayer != nullptr && button == &playButton)
     {
         filePlayer->setPlaying( ! filePlayer->isPlaying());
 		filePlayer->setPosition(startPosSlider.getValue());
     }
+
+	/*if (filePlayer->isPlaying() == false && button == &playButton)
+	{
+		startTimer(250);
+	}
+
+	if (filePlayer->isPlaying() == true && button == &playButton)
+	{
+		stopTimer();
+	}*/
 }
 
 void FilePlayerGui::setFilePlayer (FilePlayer* fp)
@@ -121,12 +128,13 @@ void FilePlayerGui::sliderValueChanged(Slider* slider)
 {
 	if (slider == &startPosSlider)
 	{
-		DBG(startPosSlider.getValue());
+		//DBG(startPosSlider.getValue());
 		filePlayer->setPosition(startPosSlider.getValue());
+		positionOverlay.setPosition(startPosSlider.getValue());
 	}
 	if (slider == &pitchSlider)
 	{
-		DBG(pitchSlider.getValue());
+		//DBG(pitchSlider.getValue());
 		filePlayer->setPlaybackRate(pitchSlider.getValue());
 	}
 }

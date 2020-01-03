@@ -18,6 +18,15 @@ void FilePlayer::setPosition(double newPosition)
 	audioTransportSource.setPosition(audioTransportSource.getLengthInSeconds() * newPosition);
 }
 
+double FilePlayer::getPosition()
+{
+	return audioTransportSource.getCurrentPosition();
+}
+double FilePlayer::getLength()
+{
+	return audioTransportSource.getLengthInSeconds();
+}
+
 void FilePlayer::setPlaying (bool newState)
 {
     if(newState == true)

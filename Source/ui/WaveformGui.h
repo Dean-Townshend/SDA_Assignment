@@ -8,6 +8,8 @@ class SimpleThumbnailComponent : public Component,
 
 public:
 
+	
+
 	SimpleThumbnailComponent (int sourceSamplesPerThumbnailSample,
 								 AudioFormatManager& formatManager,
 								 AudioThumbnailCache& cache);
@@ -35,23 +37,34 @@ private:
 //------------------------------------------------------------------------------
 
 class SimplePositionOverlay : public Component,
-							  private Timer
+							  public Timer
 {
 
 public:
 
-	SimplePositionOverlay(AudioTransportSource& transportSourceToUse);
+	//double position = 0;
+
+	SimplePositionOverlay();
 	
 	~SimplePositionOverlay();
 	
+	void setPosition(double pos);
+
 	void paint(Graphics& g) override;
 	
-	void mouseDown(const MouseEvent& event) override;
-
 private:
 
-	void timerCallback() override;
-	AudioTransportSource& transportSource;
+	void timerCallback() override
+	{
+		repaint();
+	}
+
+	double position = 0;
+
+	//double *ip = &position;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SimplePositionOverlay)
+
 };
 
 //------------------------------------------------------------------------------

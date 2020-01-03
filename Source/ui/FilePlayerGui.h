@@ -23,15 +23,12 @@ public:
     /** sets the file player that this gui controls */
     void setFilePlayer (FilePlayer* fp);
     
+	void paint(Graphics& g) override;
     //Component
     void resized() override;
 
-	void paint(Graphics& g) override;
-
-	
-
 private:
-	
+
 	AudioFormatManager formatManager;
 
 	//Button Listener
@@ -42,24 +39,19 @@ private:
     
     //FilenameComponentListener
     void filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged) override;
-
-	//void changeListenerCallback(ChangeBroadcaster* source) override;
     
     TextButton playButton {"Play/Pause"};
     std::unique_ptr<FilenameComponent> fileChooser;
     
-
 	FilePlayer* filePlayer {nullptr};
-
-	//std::array <FilePlayer*, sizeof(Audio::NumberOfFilePlayers) > &filePlayer = { nullptr, nullptr };
 
 	Slider startPosSlider;
 	Slider pitchSlider;
 
-
+	SimplePositionOverlay positionOverlay;
 	AudioTransportSource transportSource;
 	AudioThumbnailCache thumbnailCache;
 	SimpleThumbnailComponent thumbnailComp;
-	SimplePositionOverlay positionOverlay;
+	
 
 };

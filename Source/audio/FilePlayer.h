@@ -28,6 +28,10 @@ public:
 
 	void setPosition(double newPosition);
 
+	double getPosition();
+
+	double getLength();
+
 	void setPlaybackRate(double newRate);
 	
 

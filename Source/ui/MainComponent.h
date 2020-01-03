@@ -44,15 +44,7 @@ public:
 private:
     Audio& audio;
     
-	//FilePlayerGui filePlayerGui;
 	std::array <FilePlayerGui, sizeof(Audio::NumberOfFilePlayers)> filePlayerGui;
-	
-
-	AudioFormatManager formatManager;
-	AudioTransportSource transportSource;
-	AudioThumbnailCache thumbnailCache;
-	SimpleThumbnailComponent thumbnailComp;
-	SimplePositionOverlay positionOverlay;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };
