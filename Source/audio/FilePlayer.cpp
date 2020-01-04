@@ -22,6 +22,7 @@ double FilePlayer::getPosition()
 {
 	return audioTransportSource.getCurrentPosition();
 }
+
 double FilePlayer::getLength()
 {
 	return audioTransportSource.getLengthInSeconds();

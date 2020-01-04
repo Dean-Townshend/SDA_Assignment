@@ -2,7 +2,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "../audio/Audio.h"
-#include "FilePlayerGui.h"
+#include "SamplePlayerGui.h"
 #include "WaveformGui.h"
 
 //==============================================================================

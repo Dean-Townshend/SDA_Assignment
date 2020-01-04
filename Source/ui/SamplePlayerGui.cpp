@@ -1,5 +1,5 @@
 #pragma once
-#include "FilePlayerGui.h"
+#include "SamplePlayerGui.h"
 #include "WaveformGui.h"
 
 SamplePlayerGui::SamplePlayerGui(): positionOverlay(), thumbnailCache(5),
