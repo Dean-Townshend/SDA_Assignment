@@ -3,11 +3,11 @@
 #include "audio/Audio.h"
 
 //==============================================================================
-class JuceApplication  : public JUCEApplication
+class SamplePlayerApplication  : public JUCEApplication
 {
 public:
     //==============================================================================
-    JuceApplication() {}
+    SamplePlayerApplication() {}
 
     const String getApplicationName() override       { return ProjectInfo::projectName; }
     const String getApplicationVersion() override    { return ProjectInfo::versionString; }
@@ -92,4 +92,4 @@ private:
 
 //==============================================================================
 // This macro generates the main() routine that launches the app.
-START_JUCE_APPLICATION (JuceApplication)
+START_JUCE_APPLICATION (SamplePlayerApplication)

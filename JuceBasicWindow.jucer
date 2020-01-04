@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="yJ5JGO" projectType="guiapp" jucerVersion="5.4.5" name="JuceBasicWindow">
-  <MAINGROUP id="dv581t" name="JuceBasicWindow">
+<JUCERPROJECT id="yJ5JGO" projectType="guiapp" jucerVersion="5.4.5" name="SamplePlayer">
+  <MAINGROUP id="dv581t" name="SamplePlayer">
     <GROUP id="{4B1DD7E4-D485-479C-9743-DAD0E419318C}" name="Source">
       <FILE id="uJsjWN" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <GROUP id="{985A7B46-2A6A-7088-3F37-AEE57B19E13E}" name="audio">

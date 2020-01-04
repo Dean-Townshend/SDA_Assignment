@@ -3,7 +3,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 class WaveformThumbnailComponent : public Component,
-								 private ChangeListener
+								   private ChangeListener
 {
 
 public:
@@ -60,8 +60,6 @@ private:
 	}
 
 	double position = 0;
-
-	//double *ip = &position;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayheadPositionOverlay)
 

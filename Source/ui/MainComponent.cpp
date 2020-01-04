@@ -3,7 +3,7 @@
 //==============================================================================
 MainComponent::MainComponent (Audio& a) : audio (a)
 {
-	for (int i = 0; i < Audio::NumberOfFilePlayers; i++)
+	for (int i = 0; i < Audio::NumOfFilePlayers; i++)
 	{
 		filePlayerGui[i].setFilePlayer(audio.getFilePlayer(i));
 		addAndMakeVisible(filePlayerGui[i]);
@@ -23,12 +23,12 @@ void MainComponent::resized()
 	Rectangle<int> area = getLocalBounds();
 	Rectangle<int> GuiArea = area.removeFromLeft(area.getWidth()/2);
 
-	const int NumElements = Audio::NumberOfFilePlayers;
+	const int NumElements = Audio::NumOfFilePlayers;
 	int heightPerEl = area.getHeight() / NumElements;
 
-	std::array<Rectangle<int>, Audio::NumberOfFilePlayers> guiComp;
+	std::array<Rectangle<int>, Audio::NumOfFilePlayers> guiComp;
 
-	for (int i = 0; i < Audio::NumberOfFilePlayers; i++)
+	for (int i = 0; i < Audio::NumOfFilePlayers; i++)
 	{
 		guiComp[i] = GuiArea.removeFromTop(heightPerEl);
 		filePlayerGui[i].setBounds(guiComp[i]);

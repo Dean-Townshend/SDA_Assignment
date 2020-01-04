@@ -44,7 +44,7 @@ public:
 private:
     Audio& audio;
     
-	std::array <SamplePlayerGui, sizeof(Audio::NumberOfFilePlayers)> filePlayerGui;
+	std::array <SamplePlayerGui, sizeof(Audio::NumOfFilePlayers)> filePlayerGui;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

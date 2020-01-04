@@ -4,7 +4,7 @@ Audio::Audio()
 {
     audioDeviceManager.initialiseWithDefaultDevices (1, 2); //1 inputs, 2 outputs
     
-	for (int i = 0; i < NumberOfFilePlayers; i++)
+	for (int i = 0; i < NumOfFilePlayers; i++)
 	{
 		mixer.addInputSource(&filePlayer[i], false);
 	}
