@@ -6,7 +6,7 @@
 #include "WaveformGui.h"
 
 /** Gui for the FilePlayer class */
-class FilePlayerGui :   public  Component,
+class SamplePlayerGui : public  Component,
                         private Button::Listener,
                         private FilenameComponentListener,
 						private Slider::Listener
@@ -15,10 +15,10 @@ public:
 	
 
     /** constructor - receives a reference to a FilePlayer object to control */
-    FilePlayerGui();
+    SamplePlayerGui();
     
     /** Destructor */
-    ~FilePlayerGui();
+    ~SamplePlayerGui();
     
     /** sets the file player that this gui controls */
     void setFilePlayer (FilePlayer* fp);
@@ -48,10 +48,10 @@ private:
 	Slider startPosSlider;
 	Slider pitchSlider;
 
-	SimplePositionOverlay positionOverlay;
+	PlayheadPositionOverlay positionOverlay;
 	AudioTransportSource transportSource;
 	AudioThumbnailCache thumbnailCache;
-	SimpleThumbnailComponent thumbnailComp;
+	WaveformThumbnailComponent thumbnailComp;
 	
 
 };

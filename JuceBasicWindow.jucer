@@ -11,6 +11,8 @@
         <FILE id="HxjyqL" name="FilePlayer.h" compile="0" resource="0" file="Source/audio/FilePlayer.h"/>
       </GROUP>
       <GROUP id="{10CB9926-A9CF-318B-8B66-95DB3DADDF7E}" name="ui">
+        <FILE id="G70YSm" name="WaveformGui.h" compile="0" resource="0" file="Source/ui/WaveformGui.h"/>
+        <FILE id="OdK90F" name="WaveformGui.cpp" compile="1" resource="0" file="Source/ui/WaveformGui.cpp"/>
         <FILE id="EvAQXs" name="MainComponent.cpp" compile="1" resource="0"
               file="Source/ui/MainComponent.cpp"/>
         <FILE id="yOMQ5D" name="MainComponent.h" compile="0" resource="0" file="Source/ui/MainComponent.h"/>

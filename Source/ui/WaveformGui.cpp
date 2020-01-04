@@ -2,7 +2,7 @@
 #include "WaveformGui.h"
 
 
-SimpleThumbnailComponent::SimpleThumbnailComponent (int sourceSamplesPerThumbnailSample,
+WaveformThumbnailComponent::WaveformThumbnailComponent (int sourceSamplesPerThumbnailSample,
 							 AudioFormatManager& formatManager,
 							 AudioThumbnailCache& cache) 
 							: thumbnail(sourceSamplesPerThumbnailSample, formatManager, cache)
@@ -10,17 +10,17 @@ SimpleThumbnailComponent::SimpleThumbnailComponent (int sourceSamplesPerThumbnai
 	thumbnail.addChangeListener(this);
 }
 
-SimpleThumbnailComponent::~SimpleThumbnailComponent()
+WaveformThumbnailComponent::~WaveformThumbnailComponent()
 {
 
 }
 
-void SimpleThumbnailComponent::setFile(const File& file)
+void WaveformThumbnailComponent::setFile(const File& file)
 {
 	thumbnail.setSource(new FileInputSource(file));
 }
 
-void SimpleThumbnailComponent::paint(Graphics& g)
+void WaveformThumbnailComponent::paint(Graphics& g)
 {
 	if (thumbnail.getNumChannels() == 0)
 	{
@@ -32,7 +32,7 @@ void SimpleThumbnailComponent::paint(Graphics& g)
 	}
 }
 
-void SimpleThumbnailComponent::paintIfFileLoaded(Graphics& g)
+void WaveformThumbnailComponent::paintIfFileLoaded(Graphics& g)
 {
 	g.fillAll(Colours::grey);
 
@@ -40,20 +40,20 @@ void SimpleThumbnailComponent::paintIfFileLoaded(Graphics& g)
 	thumbnail.drawChannels(g, getLocalBounds(), 0.0, thumbnail.getTotalLength(), 1.0f);
 }
 
-void SimpleThumbnailComponent::changeListenerCallback(ChangeBroadcaster* source)
+void WaveformThumbnailComponent::changeListenerCallback(ChangeBroadcaster* source)
 {
 	if (source == &thumbnail)
 		thumbnailChanged();
 }
 
-void SimpleThumbnailComponent::paintIfNoFileLoaded(Graphics& g)
+void WaveformThumbnailComponent::paintIfNoFileLoaded(Graphics& g)
 {
 	g.fillAll(Colours::white);
 	g.setColour(Colours::darkgrey);
 	g.drawFittedText("No File Loaded", getLocalBounds(), Justification::centred, 1);
 }
 
-void SimpleThumbnailComponent::thumbnailChanged()
+void WaveformThumbnailComponent::thumbnailChanged()
 {
 	repaint();
 }
@@ -61,22 +61,22 @@ void SimpleThumbnailComponent::thumbnailChanged()
 
 /******************************Position Overlay*****************************************/
 
-SimplePositionOverlay::SimplePositionOverlay()
+PlayheadPositionOverlay::PlayheadPositionOverlay()
 {
 	startTimer(40);
 }
 
-SimplePositionOverlay::~SimplePositionOverlay()
+PlayheadPositionOverlay::~PlayheadPositionOverlay()
 {
 
 }
 
-void SimplePositionOverlay::setPosition(double pos)
+void PlayheadPositionOverlay::setPosition(double pos)
 {
 	position = pos;
 }
 
-void SimplePositionOverlay::paint(Graphics& g)
+void PlayheadPositionOverlay::paint(Graphics& g)
 {
 	if (position > 0.0)
 	{

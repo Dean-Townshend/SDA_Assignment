@@ -2,7 +2,7 @@
 #include "FilePlayerGui.h"
 #include "WaveformGui.h"
 
-FilePlayerGui::FilePlayerGui(): positionOverlay(), thumbnailCache(5),
+SamplePlayerGui::SamplePlayerGui(): positionOverlay(), thumbnailCache(5),
 thumbnailComp(512, formatManager, thumbnailCache)
 {
 	//Button
@@ -40,18 +40,18 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	addAndMakeVisible(&positionOverlay);
 }
 
-FilePlayerGui::~FilePlayerGui()
+SamplePlayerGui::~SamplePlayerGui()
 {
     
 }
 
-void FilePlayerGui::paint(Graphics& g)
+void SamplePlayerGui::paint(Graphics& g)
 {
 
 }
 
 //Component
-void FilePlayerGui::resized()
+void SamplePlayerGui::resized()
 {
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
@@ -80,7 +80,7 @@ void FilePlayerGui::resized()
 
 
 //Button Listener
-void FilePlayerGui::buttonClicked (Button* button)
+void SamplePlayerGui::buttonClicked (Button* button)
 {
     if (filePlayer != nullptr && button == &playButton)
     {
@@ -99,13 +99,13 @@ void FilePlayerGui::buttonClicked (Button* button)
 	}*/
 }
 
-void FilePlayerGui::setFilePlayer (FilePlayer* fp)
+void SamplePlayerGui::setFilePlayer (FilePlayer* fp)
 {
     filePlayer = fp;
 }
 
 //FilenameComponentListener
-void FilePlayerGui::filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged)
+void SamplePlayerGui::filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged)
 {
     if (fileComponentThatHasChanged == fileChooser.get())
     {
@@ -126,7 +126,7 @@ void FilePlayerGui::filenameComponentChanged (FilenameComponent* fileComponentTh
 }
 
 //Slider Listener
-void FilePlayerGui::sliderValueChanged(Slider* slider)
+void SamplePlayerGui::sliderValueChanged(Slider* slider)
 {
 	if (slider == &startPosSlider)
 	{

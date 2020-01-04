@@ -2,7 +2,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class SimpleThumbnailComponent : public Component,
+class WaveformThumbnailComponent : public Component,
 								 private ChangeListener
 {
 
@@ -10,11 +10,11 @@ public:
 
 	
 
-	SimpleThumbnailComponent (int sourceSamplesPerThumbnailSample,
+	WaveformThumbnailComponent (int sourceSamplesPerThumbnailSample,
 								 AudioFormatManager& formatManager,
 								 AudioThumbnailCache& cache);
 
-	~SimpleThumbnailComponent();
+	~WaveformThumbnailComponent();
 
 	void setFile(const File& file);
 
@@ -36,17 +36,17 @@ private:
 
 //------------------------------------------------------------------------------
 
-class SimplePositionOverlay : public Component,
-							  public Timer
+class PlayheadPositionOverlay : public Component,
+								public Timer
 {
 
 public:
 
 	//double position = 0;
 
-	SimplePositionOverlay();
+	PlayheadPositionOverlay();
 	
-	~SimplePositionOverlay();
+	~PlayheadPositionOverlay();
 	
 	void setPosition(double pos);
 
@@ -63,7 +63,7 @@ private:
 
 	//double *ip = &position;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SimplePositionOverlay)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayheadPositionOverlay)
 
 };
 
