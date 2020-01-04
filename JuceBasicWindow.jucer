@@ -14,9 +14,8 @@
         <FILE id="EvAQXs" name="MainComponent.cpp" compile="1" resource="0"
               file="Source/ui/MainComponent.cpp"/>
         <FILE id="yOMQ5D" name="MainComponent.h" compile="0" resource="0" file="Source/ui/MainComponent.h"/>
-        <FILE id="ySFoTk" name="FilePlayerGui.cpp" compile="1" resource="0"
-              file="Source/ui/FilePlayerGui.cpp"/>
-        <FILE id="DrV4Vq" name="FilePlayerGui.h" compile="0" resource="0" file="Source/ui/FilePlayerGui.h"/>
+        <FILE id="ySFoTk" name="Gui.cpp" compile="1" resource="0" file="Source/ui/Gui.cpp"/>
+        <FILE id="DrV4Vq" name="Gui.h" compile="0" resource="0" file="Source/ui/Gui.h"/>
       </GROUP>
     </GROUP>
   </MAINGROUP>
