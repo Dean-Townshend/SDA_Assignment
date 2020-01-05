@@ -46,8 +46,17 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	pitchSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
 	pitchSlider.setRange(0.1, 5.0);
 	pitchSlider.setValue(0.1);
-	pitchSlider.setTextValueSuffix(" %");
+	pitchSlider.setTextValueSuffix(" *");
 	pitchSlider.setNumDecimalPlacesToDisplay(3);
+
+	finePitchSlider.addListener(this);
+	addAndMakeVisible(finePitchSlider);
+	finePitchSlider.setSliderStyle(Slider::Rotary);
+	finePitchSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
+	finePitchSlider.setRange(0.1, 5.0);
+	finePitchSlider.setValue(0.1);
+	finePitchSlider.setTextValueSuffix(" *");
+	finePitchSlider.setNumDecimalPlacesToDisplay(3);
 
 	//Labels
 	startPosSliderLabel.setText("Start:", dontSendNotification);
@@ -60,6 +69,14 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	//endPosSliderLabel.attachToComponent(&endPosSlider, true);
 	endPosSliderLabel.setColour(Label::textColourId, Colours::blue);
 	addAndMakeVisible(endPosSliderLabel);
+
+	pitchSliderLabel.setText("Pitch", dontSendNotification);
+	pitchSliderLabel.setColour(Label::textColourId, Colours::black);
+	addAndMakeVisible(pitchSliderLabel);
+
+	finePitchSliderLabel.setText("Fine Pitch", dontSendNotification);
+	finePitchSliderLabel.setColour(Label::textColourId, Colours::black);
+	addAndMakeVisible(finePitchSliderLabel);
 
 	//Waveform view
 	addAndMakeVisible(&thumbnailComp);
@@ -83,21 +100,36 @@ void SamplePlayerGui::resized()
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
 	/**********************LEFT OF WINDOW**************************************************/
-
-	const int NumElements = 3; //How many elements need to be mapped out 
-	int heightPerEl = area.getHeight() / NumElements;
-
-	Rectangle<int> leftArea = area.removeFromLeft(area.getWidth()/2);
+	Rectangle<int> leftArea = area.removeFromLeft(area.getWidth()*0.5);
 	
-	Rectangle<int> playButtArea = leftArea.removeFromTop(heightPerEl);
-	Rectangle<int> fileChooseArea = leftArea.removeFromTop(heightPerEl);
-	Rectangle<int> pitchControlArea = leftArea.removeFromBottom(heightPerEl);
-	
+	Rectangle<int> playArea = leftArea.removeFromTop(leftArea.getHeight() * 0.3);
+
+	Rectangle<int> playButtArea = playArea.removeFromTop(playArea.getHeight()*0.6);
+	Rectangle<int> fileChooseArea = playArea;
+
+	Rectangle<int> pitchControlArea = leftArea;
+
+	Rectangle<int> pitchArea = pitchControlArea.removeFromLeft(pitchControlArea.getWidth()/2);
+	Rectangle<int> finePitchArea = pitchControlArea;
+
+	Rectangle<int> pitchLabelArea = pitchArea.removeFromBottom(finePitchArea.getHeight() * 0.4);
+	Rectangle<int> finePitchLabelArea = finePitchArea.removeFromBottom(finePitchArea.getHeight()*0.4);
+
+
+
 	playButton.setBounds(playButtArea);
     fileChooser->setBounds (fileChooseArea);
+	
+	pitchSlider.setBounds(pitchArea);
+	finePitchSlider.setBounds(finePitchArea);
 
-	pitchSlider.setTextBoxStyle(Slider::TextBoxAbove, false, getWidth(), getHeight());
-	pitchSlider.setBounds(pitchControlArea.removeFromLeft(pitchControlArea.getWidth()/2));
+	pitchSlider.setTextBoxStyle(Slider::TextBoxAbove, false, pitchArea.getWidth(), pitchArea.getHeight() / 4);
+	finePitchSlider.setTextBoxStyle(Slider::TextBoxAbove, false, finePitchArea.getWidth(), finePitchArea.getHeight() / 4);
+	
+	pitchSliderLabel.setBounds(pitchLabelArea);
+	pitchSliderLabel.setJustificationType(Justification::centred);
+	finePitchSliderLabel.setBounds(finePitchLabelArea);
+	finePitchSliderLabel.setJustificationType(Justification::centred);
 
 	/**********************RIGHT OF SCREEN************************************************/
 

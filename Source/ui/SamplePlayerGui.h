@@ -40,7 +40,7 @@ private:
     //FilenameComponentListener
     void filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged) override;
     
-    TextButton playButton {"Play"};
+    TextButton playButton {"Trigger"};
     std::unique_ptr<FilenameComponent> fileChooser;
     
 	FilePlayer* filePlayer {nullptr};
@@ -52,6 +52,10 @@ private:
 	Label endPosSliderLabel;
 
 	Slider pitchSlider;
+	Label pitchSliderLabel;
+
+	Slider finePitchSlider;
+	Label finePitchSliderLabel;
 
 	PlayheadPositionOverlay startPositionOverlay;
 	PlayheadPositionOverlay endPositionOverlay;

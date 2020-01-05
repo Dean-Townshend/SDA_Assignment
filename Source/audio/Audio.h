@@ -40,7 +40,7 @@ private:
 	AudioDeviceManager audioDeviceManager;
 	AudioSourcePlayer audioSourcePlayer;
 	
-	std::array <FilePlayer, sizeof(NumOfFilePlayers)> filePlayer;
+	std::array <FilePlayer, NumOfFilePlayers> filePlayer;
 
 	MixerAudioSource mixer;
 };
