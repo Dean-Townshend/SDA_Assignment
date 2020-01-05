@@ -42,7 +42,7 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	//Pitch slider
 	pitchSlider.addListener(this);
 	addAndMakeVisible(pitchSlider);
-	pitchSlider.setSliderStyle(Slider::LinearHorizontal);
+	pitchSlider.setSliderStyle(Slider::Rotary);
 	pitchSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
 	pitchSlider.setRange(0.1, 5.0);
 	pitchSlider.setValue(0.1);
@@ -91,11 +91,13 @@ void SamplePlayerGui::resized()
 	
 	Rectangle<int> playButtArea = leftArea.removeFromTop(heightPerEl);
 	Rectangle<int> fileChooseArea = leftArea.removeFromTop(heightPerEl);
-	Rectangle<int> pitchSliderArea = leftArea.removeFromBottom(heightPerEl);
+	Rectangle<int> pitchControlArea = leftArea.removeFromBottom(heightPerEl);
 	
 	playButton.setBounds(playButtArea);
     fileChooser->setBounds (fileChooseArea);
-	pitchSlider.setBounds(pitchSliderArea);
+
+	pitchSlider.setTextBoxStyle(Slider::TextBoxAbove, false, getWidth(), getHeight());
+	pitchSlider.setBounds(pitchControlArea.removeFromLeft(pitchControlArea.getWidth()/2));
 
 	/**********************RIGHT OF SCREEN************************************************/
 
@@ -105,8 +107,8 @@ void SamplePlayerGui::resized()
 	Rectangle<int> startSliderArea = rightArea.removeFromTop(rightArea.getHeight() / 2);
 	Rectangle<int> endSliderArea = rightArea; //Remains of right area
 
-	Rectangle<int> startSliderAreaControls = startSliderArea.removeFromRight(startSliderArea.getWidth()*0.8);
-	Rectangle<int> endSliderAreaControls = endSliderArea.removeFromRight(endSliderArea.getWidth()*0.8);
+	Rectangle<int> startSliderAreaControls = startSliderArea.removeFromRight(startSliderArea.getWidth()*0.85);
+	Rectangle<int> endSliderAreaControls = endSliderArea.removeFromRight(endSliderArea.getWidth()*0.85);
 
 	startPosSlider.setBounds(startSliderAreaControls);
 	endPosSlider.setBounds(endSliderAreaControls);
