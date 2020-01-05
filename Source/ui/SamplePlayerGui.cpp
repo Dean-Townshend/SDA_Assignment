@@ -46,18 +46,20 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	pitchSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
 	pitchSlider.setRange(0.1, 5.0);
 	pitchSlider.setValue(0.1);
-	endPosSlider.setTextValueSuffix(" %");
+	pitchSlider.setTextValueSuffix(" %");
 	pitchSlider.setNumDecimalPlacesToDisplay(3);
 
 	//Labels
-	startPosSliderLabel.setText("Start Lo:", dontSendNotification);
-	startPosSliderLabel.attachToComponent(&startPosSlider, true);
+	startPosSliderLabel.setText("Start:", dontSendNotification);
+	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
 	startPosSliderLabel.setColour(Label::textColourId, Colours::green);
+	addAndMakeVisible(startPosSliderLabel);
 
-	endPosSliderLabel.setText("End Lo:", dontSendNotification);
-	endPosSliderLabel.attachToComponent(&endPosSlider, true);
+
+	endPosSliderLabel.setText("End:", dontSendNotification);
+	//endPosSliderLabel.attachToComponent(&endPosSlider, true);
 	endPosSliderLabel.setColour(Label::textColourId, Colours::blue);
-
+	addAndMakeVisible(endPosSliderLabel);
 
 	//Waveform view
 	addAndMakeVisible(&thumbnailComp);
@@ -98,25 +100,28 @@ void SamplePlayerGui::resized()
 	/**********************RIGHT OF SCREEN************************************************/
 
 	Rectangle<int> rightArea = area; //Remains of area
-	Rectangle<int> waveform = rightArea.removeFromTop(rightArea.getHeight() * 0.80);
+	Rectangle<int> waveform = rightArea.removeFromTop(rightArea.getHeight() * 0.8);
 
 	Rectangle<int> startSliderArea = rightArea.removeFromTop(rightArea.getHeight() / 2);
 	Rectangle<int> endSliderArea = rightArea; //Remains of right area
 
-	startPosSlider.setBounds(startSliderArea);
-	endPosSlider.setBounds(endSliderArea);
+	Rectangle<int> startSliderAreaControls = startSliderArea.removeFromRight(startSliderArea.getWidth()*0.8);
+	Rectangle<int> endSliderAreaControls = endSliderArea.removeFromRight(endSliderArea.getWidth()*0.8);
 
-	startPosSlider.setTextBoxStyle(Slider::TextBoxLeft, false, startSliderArea.getWidth()*0.3, startSliderArea.getHeight());
-	endPosSlider.setTextBoxStyle(Slider::TextBoxLeft, false, endSliderArea.getWidth()*0.3, startSliderArea.getHeight());
+	startPosSlider.setBounds(startSliderAreaControls);
+	endPosSlider.setBounds(endSliderAreaControls);
+
+	//startPosSlider.setTextBoxStyle(Slider::TextBoxLeft, false, startSliderAreaC.getWidth(), startSliderAreaC.getHeight());
+	//endPosSlider.setTextBoxStyle(Slider::TextBoxLeft, false, endSliderAreaC.getWidth(), endSliderAreaC.getHeight());
+
+	startPosSliderLabel.setBounds(startSliderArea);
+	endPosSliderLabel.setBounds(endSliderArea);
 
 	startPositionOverlay.setBounds(waveform);
 	endPositionOverlay.setBounds(waveform);
 	
 	startPositionOverlay.setCrosshairColour("green");
 	endPositionOverlay.setCrosshairColour("blue");
-
-	startPosSliderLabel.attachToComponent(&startPosSlider, true);
-	endPosSliderLabel.attachToComponent(&endPosSlider, true);
 
 	thumbnailComp.setBounds(waveform);
 }
