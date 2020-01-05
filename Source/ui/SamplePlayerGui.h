@@ -40,15 +40,22 @@ private:
     //FilenameComponentListener
     void filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged) override;
     
-    TextButton playButton {"Play/Pause"};
+    TextButton playButton {"Play"};
     std::unique_ptr<FilenameComponent> fileChooser;
     
 	FilePlayer* filePlayer {nullptr};
 
 	Slider startPosSlider;
+	Slider endPosSlider;
+
+	Label startPosSliderLabel;
+	Label endPosSliderLabel;
+
 	Slider pitchSlider;
 
-	PlayheadPositionOverlay positionOverlay;
+	PlayheadPositionOverlay startPositionOverlay;
+	PlayheadPositionOverlay endPositionOverlay;
+
 	AudioTransportSource transportSource;
 	AudioThumbnailCache thumbnailCache;
 	WaveformThumbnailComponent thumbnailComp;

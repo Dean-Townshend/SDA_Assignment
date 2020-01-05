@@ -2,7 +2,7 @@
 #include "SamplePlayerGui.h"
 #include "WaveformGui.h"
 
-SamplePlayerGui::SamplePlayerGui(): positionOverlay(), thumbnailCache(5),
+SamplePlayerGui::SamplePlayerGui(): startPositionOverlay(), thumbnailCache(5),
 thumbnailComp(512, formatManager, thumbnailCache)
 {
 	//Button
@@ -11,12 +11,13 @@ thumbnailComp(512, formatManager, thumbnailCache)
     
 	//File Chooser
     formatManager.registerBasicFormats();
-    fileChooser = std::make_unique<FilenameComponent> ("audiofile",
+	
+    fileChooser = std::make_unique<FilenameComponent>("audiofile",
                                                        File(),
                                                        true, false, false,
                                                        formatManager.getWildcardForAllFormats(),
                                                        String(),
-                                                       "(select an audio file)");
+                                                       "(select audio file)");
     fileChooser->addListener (this);
     addAndMakeVisible (fileChooser.get());
 
@@ -26,6 +27,17 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	startPosSlider.setSliderStyle(Slider::LinearHorizontal);
 	startPosSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
 	startPosSlider.setRange(0.0, 1.0);
+	startPosSlider.setTextValueSuffix(" S");
+	startPosSlider.setNumDecimalPlacesToDisplay(3);
+
+	//End
+	endPosSlider.addListener(this);
+	addAndMakeVisible(endPosSlider);
+	endPosSlider.setSliderStyle(Slider::LinearHorizontal);
+	endPosSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
+	endPosSlider.setRange(0.0, 1.0);
+	endPosSlider.setTextValueSuffix(" S");
+	endPosSlider.setNumDecimalPlacesToDisplay(3);
 
 	//Pitch slider
 	pitchSlider.addListener(this);
@@ -34,10 +46,23 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	pitchSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
 	pitchSlider.setRange(0.1, 5.0);
 	pitchSlider.setValue(0.1);
+	endPosSlider.setTextValueSuffix(" %");
+	pitchSlider.setNumDecimalPlacesToDisplay(3);
+
+	//Labels
+	startPosSliderLabel.setText("Start Lo:", dontSendNotification);
+	startPosSliderLabel.attachToComponent(&startPosSlider, true);
+	startPosSliderLabel.setColour(Label::textColourId, Colours::green);
+
+	endPosSliderLabel.setText("End Lo:", dontSendNotification);
+	endPosSliderLabel.attachToComponent(&endPosSlider, true);
+	endPosSliderLabel.setColour(Label::textColourId, Colours::blue);
+
 
 	//Waveform view
 	addAndMakeVisible(&thumbnailComp);
-	addAndMakeVisible(&positionOverlay);
+	addAndMakeVisible(&startPositionOverlay);
+	addAndMakeVisible(&endPositionOverlay);
 }
 
 SamplePlayerGui::~SamplePlayerGui()
@@ -55,27 +80,45 @@ void SamplePlayerGui::resized()
 {
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
+	/**********************LEFT OF WINDOW**************************************************/
+
 	const int NumElements = 3; //How many elements need to be mapped out 
 	int heightPerEl = area.getHeight() / NumElements;
 
-	Rectangle<int> controlArea = area.removeFromLeft(area.getWidth()/2);
-	Rectangle<int> waveformArea = area;
-
-	Rectangle<int> waveform = waveformArea.removeFromTop(waveformArea.getHeight() * 0.80);
-	Rectangle<int> waveformSlider = waveformArea;
-
-	positionOverlay.setBounds(waveform);
-	thumbnailComp.setBounds(waveform);
+	Rectangle<int> leftArea = area.removeFromLeft(area.getWidth()/2);
 	
-	Rectangle<int> playButtArea = controlArea.removeFromTop(heightPerEl);
-	Rectangle<int> fileChooseArea = controlArea.removeFromTop(heightPerEl);
-	Rectangle<int> pitchSliderArea = controlArea.removeFromBottom(heightPerEl);
-	//Rectangle<int> startSliderArea = controlArea.removeFromBottom(heightPerEl);
+	Rectangle<int> playButtArea = leftArea.removeFromTop(heightPerEl);
+	Rectangle<int> fileChooseArea = leftArea.removeFromTop(heightPerEl);
+	Rectangle<int> pitchSliderArea = leftArea.removeFromBottom(heightPerEl);
 	
 	playButton.setBounds(playButtArea);
     fileChooser->setBounds (fileChooseArea);
-	startPosSlider.setBounds(waveformArea);
 	pitchSlider.setBounds(pitchSliderArea);
+
+	/**********************RIGHT OF SCREEN************************************************/
+
+	Rectangle<int> rightArea = area; //Remains of area
+	Rectangle<int> waveform = rightArea.removeFromTop(rightArea.getHeight() * 0.80);
+
+	Rectangle<int> startSliderArea = rightArea.removeFromTop(rightArea.getHeight() / 2);
+	Rectangle<int> endSliderArea = rightArea; //Remains of right area
+
+	startPosSlider.setBounds(startSliderArea);
+	endPosSlider.setBounds(endSliderArea);
+
+	startPosSlider.setTextBoxStyle(Slider::TextBoxLeft, false, startSliderArea.getWidth()*0.3, startSliderArea.getHeight());
+	endPosSlider.setTextBoxStyle(Slider::TextBoxLeft, false, endSliderArea.getWidth()*0.3, startSliderArea.getHeight());
+
+	startPositionOverlay.setBounds(waveform);
+	endPositionOverlay.setBounds(waveform);
+	
+	startPositionOverlay.setCrosshairColour("green");
+	endPositionOverlay.setCrosshairColour("blue");
+
+	startPosSliderLabel.attachToComponent(&startPosSlider, true);
+	endPosSliderLabel.attachToComponent(&endPosSlider, true);
+
+	thumbnailComp.setBounds(waveform);
 }
 
 
@@ -88,15 +131,15 @@ void SamplePlayerGui::buttonClicked (Button* button)
 		filePlayer->setPosition(startPosSlider.getValue());
     }
 
-	/*if (filePlayer->isPlaying() == false && button == &playButton)
+	if (filePlayer->isPlaying() == false && button == &playButton)
 	{
-		startTimer(250);
+	
 	}
 
 	if (filePlayer->isPlaying() == true && button == &playButton)
 	{
-		stopTimer();
-	}*/
+	
+	}
 }
 
 void SamplePlayerGui::setFilePlayer (FilePlayer* fp)
@@ -132,7 +175,13 @@ void SamplePlayerGui::sliderValueChanged(Slider* slider)
 	{
 		//DBG(startPosSlider.getValue());
 		filePlayer->setPosition(startPosSlider.getValue());
-		positionOverlay.setPosition(startPosSlider.getValue());
+		startPositionOverlay.setPosition(startPosSlider.getValue());
+	}
+	if (slider == &endPosSlider)
+	{
+		//DBG(startPosSlider.getValue());
+		//filePlayer->setEndPosition(startPosSlider.getValue());
+		endPositionOverlay.setPosition(endPosSlider.getValue());
 	}
 	if (slider == &pitchSlider)
 	{

@@ -9,7 +9,7 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 		addAndMakeVisible(filePlayerGui[i]);
 	}	
     
-    setSize (600, 600);
+    setSize (700, 700);
 }
 
 MainComponent::~MainComponent()

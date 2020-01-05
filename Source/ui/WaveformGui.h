@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include <string>
 
 class WaveformThumbnailComponent : public Component,
 								   private ChangeListener
@@ -50,6 +51,8 @@ public:
 	
 	void setPosition(double pos);
 
+	void setCrosshairColour(std::string colour);
+
 	void paint(Graphics& g) override;
 	
 private:
@@ -60,6 +63,9 @@ private:
 	}
 
 	double position = 0;
+	std::string crosshairColour;
+
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayheadPositionOverlay)
 

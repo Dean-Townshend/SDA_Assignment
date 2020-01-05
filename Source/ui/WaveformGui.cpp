@@ -76,12 +76,27 @@ void PlayheadPositionOverlay::setPosition(double pos)
 	position = pos;
 }
 
+void PlayheadPositionOverlay::setCrosshairColour(std::string colour)
+{
+	crosshairColour = colour;
+}
+
 void PlayheadPositionOverlay::paint(Graphics& g)
 {
 	if (position > 0.0)
 	{
 		auto drawPosition = position * getWidth();
-		g.setColour(Colours::white);
+
+		if (crosshairColour == "green")
+		{
+			g.setColour(Colours::green);
+		}
+
+		if (crosshairColour == "blue")
+		{
+			g.setColour(Colours::blue);
+		}
+
 		g.drawLine(drawPosition, 0.0f, drawPosition, (float)getHeight(), 1.0f);
 	}
 }
