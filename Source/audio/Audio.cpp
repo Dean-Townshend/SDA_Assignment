@@ -34,7 +34,30 @@ FilePlayer* Audio::getFilePlayer(int playerNum)
 
 void Audio::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& message)
 {
-    //All MIDI inputs arrive here
+	if (message.isNoteOn())
+	{
+		DBG( message.getNoteNumber());
+
+		if (message.getNoteNumber() == 60)
+		{
+			filePlayer[0].setPlaying(true);
+		}
+
+		if (message.getNoteNumber() == 61)
+		{
+			filePlayer[1].setPlaying(true);
+		}
+		if (message.getNoteNumber() == 62)
+		{
+			filePlayer[2].setPlaying(true);
+		}
+		if (message.getNoteNumber() == 64)
+		{
+			filePlayer[3].setPlaying(true);
+		}
+		
+	}
+
 
 }
 

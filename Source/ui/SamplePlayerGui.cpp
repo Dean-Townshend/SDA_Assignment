@@ -170,7 +170,7 @@ void SamplePlayerGui::buttonClicked (Button* button)
 		filePlayer->setPosition(startPosSlider.getValue());
     }
 
-	if (filePlayer->isPlaying() == false && button == &playButton)
+	/*if (filePlayer->isPlaying() == false && button == &playButton)
 	{
 	
 	}
@@ -178,7 +178,7 @@ void SamplePlayerGui::buttonClicked (Button* button)
 	if (filePlayer->isPlaying() == true && button == &playButton)
 	{
 	
-	}
+	}*/
 }
 
 void SamplePlayerGui::setFilePlayer (FilePlayer* fp)
