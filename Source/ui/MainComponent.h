@@ -46,6 +46,7 @@ public:
     StringArray getMenuBarNames() override;
     PopupMenu getMenuForIndex (int topLevelMenuIndex, const String& menuName) override;
     void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
+
     
 private:
 
@@ -54,6 +55,8 @@ private:
 
 	//Button Listener
 	void buttonClicked(Button* button) override;
+
+	int playerInView = 0;
 
     Audio& audio;
     

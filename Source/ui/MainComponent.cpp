@@ -7,7 +7,7 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 		filePlayerGui[i].setFilePlayer(audio.getFilePlayer(i));
 	}	
   
-	addAndMakeVisible(filePlayerGui[0]);
+	
 
 	verbSlider.addListener(this);
 	addAndMakeVisible(verbSlider);
@@ -57,11 +57,13 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::resized()
 {
+
+	
 	Rectangle<int> area = getLocalBounds();
 	Rectangle<int> guiArea = area;
 	Rectangle<int> controlGuiArea = guiArea.removeFromRight(area.getWidth() * 0.5);
 
-	filePlayerGui[0].setBounds(controlGuiArea);
+	filePlayerGui[playerInView].setBounds(controlGuiArea);
 
 	
 	Rectangle<int> padGuiArea = guiArea.removeFromTop(guiArea.getHeight()*0.8);
@@ -153,41 +155,52 @@ void MainComponent::menuItemSelected (int menuItemID, int topLevelMenuIndex)
     }
 }
 
+
 void MainComponent::buttonClicked(Button* button)
 {
 	if (button == &padButton[0])
 	{
 		DBG("C4");
+		playerInView = 0;
 	}
 	if (button == &padButton[1])
 	{
 		DBG("D4");
+		playerInView = 1;
 	}
 	if (button == &padButton[2])
 	{
 		DBG("E4");
+		playerInView = 2;
 	}
 	if (button == &padButton[3])
 	{
 		DBG("F4");
+		playerInView = 3;
 	}
 	if (button == &padButton[4])
 	{
 		DBG("G4");
+		playerInView = 4;
 	}
 	if (button == &padButton[5])
 	{
 		DBG("A4");
+		playerInView = 5;
 	}
 	if (button == &padButton[6])
 	{
 		DBG("B4");
+		playerInView = 6;
 	}
 	if (button == &padButton[7])
 	{
 		DBG("C5");
+		playerInView = 7;
 	}
-	
+	addAndMakeVisible(filePlayerGui[playerInView]);
+	resized();
+
 }
 
 void MainComponent::sliderValueChanged(Slider* slider)
