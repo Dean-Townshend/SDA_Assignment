@@ -12,7 +12,7 @@ class Audio : public MidiInputCallback,
 public:
 	enum
 	{
-		NumOfFilePlayers = 4
+		NumOfFilePlayers = 8
 	};
 
 	/** Constructor */

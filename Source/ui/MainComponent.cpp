@@ -7,8 +7,6 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 		filePlayerGui[i].setFilePlayer(audio.getFilePlayer(i));
 	}	
   
-	
-
 	verbSlider.addListener(this);
 	addAndMakeVisible(verbSlider);
 	verbSlider.setSliderStyle(Slider::LinearHorizontal);
@@ -57,12 +55,11 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::resized()
 {
-
-	
 	Rectangle<int> area = getLocalBounds();
 	Rectangle<int> guiArea = area;
 	Rectangle<int> controlGuiArea = guiArea.removeFromRight(area.getWidth() * 0.5);
 
+	
 	filePlayerGui[playerInView].setBounds(controlGuiArea);
 
 	
@@ -123,6 +120,8 @@ void MainComponent::resized()
 
 		levelSlider.setBounds(levelSliderArea);
 		levelSliderLabel.setBounds(levelLabel);
+
+		addAndMakeVisible(filePlayerGui[playerInView]);
 }
 
 //MenuBarCallbacks==============================================================
@@ -198,7 +197,8 @@ void MainComponent::buttonClicked(Button* button)
 		DBG("C5");
 		playerInView = 7;
 	}
-	addAndMakeVisible(filePlayerGui[playerInView]);
+
+	
 	resized();
 
 }
