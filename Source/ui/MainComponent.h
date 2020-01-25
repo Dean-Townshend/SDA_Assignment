@@ -15,7 +15,11 @@ class MainComponent   : public Component,
 						private Slider::Listener
 {
 public:
+
+	std::array<String, 9 > notes = { "C", "D", "E", "F", "G", "A", "B", "C", "\0" };
+	
     //==============================================================================
+
     /** Constructor */
 	MainComponent(Audio& a);
 

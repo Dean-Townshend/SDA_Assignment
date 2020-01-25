@@ -42,6 +42,7 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 	for (int i = 0; i < 8; i++)
 	{
 		addAndMakeVisible(pads[i]);
+		pads[i].setButtonText(notes[i]);
 	}
 
     setSize (600, 600);
