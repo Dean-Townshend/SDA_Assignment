@@ -12,11 +12,12 @@
 */
 class MainComponent   : public Component,
                         public MenuBarModel,
-						private Slider::Listener
+						private Slider::Listener,
+						private Button::Listener
 {
 public:
 
-	std::array<String, 9 > notes = { "C", "D", "E", "F", "G", "A", "B", "C", "\0" };
+	std::array<String, 9 > notes = { "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "\0" };
 	
     //==============================================================================
 
@@ -51,6 +52,9 @@ private:
 	//Slider Listener
 	void sliderValueChanged(Slider* slider) override;
 
+	//Button Listener
+	void buttonClicked(Button* button) override;
+
     Audio& audio;
     
 	std::array <SamplePlayerGui, Audio::NumOfFilePlayers> filePlayerGui;
@@ -61,7 +65,7 @@ private:
 	Slider levelSlider;
 	Label levelSliderLabel;
 
-	std::array <TextButton, 8> pads;
+	std::array <TextButton, 8> padButton;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

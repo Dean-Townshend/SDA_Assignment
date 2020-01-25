@@ -172,6 +172,7 @@ void SamplePlayerGui::buttonClicked (Button* button)
 {
     if (filePlayer != nullptr && button == &playButton)
     {
+		DBG("tiggered");
         filePlayer->setPlaying( ! filePlayer->isPlaying());
 		filePlayer->setPosition(startPosSlider.getValue());
     }

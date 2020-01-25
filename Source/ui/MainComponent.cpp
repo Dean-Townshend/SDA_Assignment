@@ -41,8 +41,9 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 
 	for (int i = 0; i < 8; i++)
 	{
-		addAndMakeVisible(pads[i]);
-		pads[i].setButtonText(notes[i]);
+		padButton[i].addListener(this);
+		addAndMakeVisible(padButton[i]);
+		padButton[i].setButtonText(notes[i]);
 	}
 
     setSize (600, 600);
@@ -100,7 +101,7 @@ void MainComponent::resized()
 
 		for (int i = 0; i < 8; i++)
 		{
-			pads[i].setBounds(padButts[i]);
+			padButton[i].setBounds(padButts[i]);
 
 		}
 
@@ -150,6 +151,43 @@ void MainComponent::menuItemSelected (int menuItemID, int topLevelMenuIndex)
                                            &audioSettingsComp, this, Colours::dimgrey, true);
         }
     }
+}
+
+void MainComponent::buttonClicked(Button* button)
+{
+	if (button == &padButton[0])
+	{
+		DBG("C4");
+	}
+	if (button == &padButton[1])
+	{
+		DBG("D4");
+	}
+	if (button == &padButton[2])
+	{
+		DBG("E4");
+	}
+	if (button == &padButton[3])
+	{
+		DBG("F4");
+	}
+	if (button == &padButton[4])
+	{
+		DBG("G4");
+	}
+	if (button == &padButton[5])
+	{
+		DBG("A4");
+	}
+	if (button == &padButton[6])
+	{
+		DBG("B4");
+	}
+	if (button == &padButton[7])
+	{
+		DBG("C5");
+	}
+	
 }
 
 void MainComponent::sliderValueChanged(Slider* slider)
