@@ -22,6 +22,8 @@ public:
     
     /** sets the file player that this gui controls */
     void setFilePlayer (FilePlayer* fp);
+
+	void setNameLabelText(String name);
     
 	void paint(Graphics& g) override;
     //Component

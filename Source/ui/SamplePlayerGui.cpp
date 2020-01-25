@@ -171,6 +171,11 @@ void SamplePlayerGui::resized()
 }
 
 
+void SamplePlayerGui::setNameLabelText(String name)
+{
+	nameLabel.setText(name, dontSendNotification);
+}
+
 //Button Listener
 void SamplePlayerGui::buttonClicked (Button* button)
 {

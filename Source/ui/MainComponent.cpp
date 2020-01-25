@@ -44,6 +44,11 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 		padButton[i].setButtonText(notes[i]);
 	}
 
+	for (int i = 0; i < Audio::NumOfFilePlayers; i++)
+	{
+		filePlayerGui[i].setNameLabelText(notes[i]);
+	}
+
     setSize (600, 600);
 }
 
