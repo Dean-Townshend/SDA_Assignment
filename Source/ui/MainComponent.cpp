@@ -44,8 +44,6 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 		padButton[i].setButtonText(notes[i]);
 	}
 
-	
-
     setSize (600, 600);
 }
 
@@ -60,14 +58,11 @@ void MainComponent::resized()
 	Rectangle<int> area = getLocalBounds();
 	Rectangle<int> guiArea = area;
 	Rectangle<int> controlGuiArea = guiArea.removeFromRight(area.getWidth() * 0.5);
-
-	
 	
 	filePlayerGui[playerInView].setBounds(controlGuiArea);
+	addAndMakeVisible(filePlayerGui[playerInView]);
 
-	
 	Rectangle<int> padGuiArea = guiArea.removeFromTop(guiArea.getHeight()*0.8);
-
 
 	int heightPerRow = padGuiArea.getHeight()/4;
 	int widthPerRow = padGuiArea.getWidth()/2;
@@ -107,7 +102,6 @@ void MainComponent::resized()
 
 		}
 
-
 		Rectangle<int> masterControls = guiArea;
 
 		Rectangle<int> reverb = masterControls.removeFromTop(masterControls.getHeight() / 2);
@@ -124,7 +118,6 @@ void MainComponent::resized()
 		levelSlider.setBounds(levelSliderArea);
 		levelSliderLabel.setBounds(levelLabel);
 
-		
 }
 
 //MenuBarCallbacks==============================================================
@@ -203,9 +196,7 @@ void MainComponent::buttonClicked(Button* button)
 		playerInView = 7;
 	}
 
-	addAndMakeVisible(filePlayerGui[playerInView]);
 	resized();
-
 }
 
 void MainComponent::sliderValueChanged(Slider* slider)

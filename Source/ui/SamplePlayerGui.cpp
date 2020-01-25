@@ -61,7 +61,9 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	//Labels
 	nameLabel.setText("Name", dontSendNotification);
 	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
-	nameLabel.setColour(Label::textColourId, Colours::green);
+	nameLabel.setColour(Label::textColourId, Colours::darkslategrey);
+	nameLabel.setColour(Label::outlineColourId, Colours::darkslategrey);
+	nameLabel.setJustificationType(Justification::centred);
 	addAndMakeVisible(nameLabel);
 
 
@@ -105,6 +107,8 @@ void SamplePlayerGui::resized()
 {
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
+	Rectangle<int> nameArea = area.removeFromTop(area.getHeight() * 0.05);
+
 	/**********************Top**************************************************/
 	Rectangle<int> topArea = area.removeFromBottom(area.getHeight()*0.5);
 	
@@ -121,7 +125,7 @@ void SamplePlayerGui::resized()
 	Rectangle<int> pitchLabelArea = pitchArea.removeFromBottom(finePitchArea.getHeight() * 0.4);
 	Rectangle<int> finePitchLabelArea = finePitchArea.removeFromBottom(finePitchArea.getHeight()*0.4);
 
-
+	nameLabel.setBounds(nameArea);
 
 	playButton.setBounds(playButtArea);
     fileChooser->setBounds (fileChooseArea);
