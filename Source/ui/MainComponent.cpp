@@ -21,7 +21,7 @@ MainComponent::~MainComponent()
 void MainComponent::resized()
 {
 	Rectangle<int> area = getLocalBounds();
-	Rectangle<int> GuiArea = area.removeFromLeft(area.getWidth());
+	Rectangle<int> GuiArea = area.removeFromLeft(area.getWidth()/2);
 
 	const int NumElements = Audio::NumOfFilePlayers;
 	int heightPerEl = area.getHeight() / NumElements;
