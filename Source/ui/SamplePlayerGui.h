@@ -45,6 +45,8 @@ private:
     
 	FilePlayer* filePlayer {nullptr};
 
+	Label nameLabel;
+
 	Slider startPosSlider;
 	Slider endPosSlider;
 

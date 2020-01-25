@@ -59,6 +59,12 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	finePitchSlider.setNumDecimalPlacesToDisplay(3);
 
 	//Labels
+	nameLabel.setText("Name", dontSendNotification);
+	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
+	nameLabel.setColour(Label::textColourId, Colours::green);
+	addAndMakeVisible(nameLabel);
+
+
 	startPosSliderLabel.setText("Start:", dontSendNotification);
 	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
 	startPosSliderLabel.setColour(Label::textColourId, Colours::green);
@@ -99,15 +105,15 @@ void SamplePlayerGui::resized()
 {
 	Rectangle<int> area = getLocalBounds(); //Rectangle is used to map out each element of the file player
 
-	/**********************LEFT OF WINDOW**************************************************/
-	Rectangle<int> leftArea = area.removeFromLeft(area.getWidth()*0.5);
+	/**********************Top**************************************************/
+	Rectangle<int> topArea = area.removeFromBottom(area.getHeight()*0.5);
 	
-	Rectangle<int> playArea = leftArea.removeFromTop(leftArea.getHeight() * 0.3);
+	Rectangle<int> playArea = topArea.removeFromBottom(topArea.getHeight() * 0.3);
 
 	Rectangle<int> playButtArea = playArea.removeFromTop(playArea.getHeight()*0.6);
 	Rectangle<int> fileChooseArea = playArea;
 
-	Rectangle<int> pitchControlArea = leftArea;
+	Rectangle<int> pitchControlArea = topArea;
 
 	Rectangle<int> pitchArea = pitchControlArea.removeFromLeft(pitchControlArea.getWidth()/2);
 	Rectangle<int> finePitchArea = pitchControlArea;
@@ -131,7 +137,7 @@ void SamplePlayerGui::resized()
 	finePitchSliderLabel.setBounds(finePitchLabelArea);
 	finePitchSliderLabel.setJustificationType(Justification::centred);
 
-	/**********************RIGHT OF SCREEN************************************************/
+	/**********************Thumb************************************************/
 
 	Rectangle<int> rightArea = area; //Remains of area
 	Rectangle<int> waveform = rightArea.removeFromTop(rightArea.getHeight() * 0.8);

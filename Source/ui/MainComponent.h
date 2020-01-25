@@ -11,7 +11,8 @@
     your controls and content.
 */
 class MainComponent   : public Component,
-                        public MenuBarModel
+                        public MenuBarModel,
+						private Slider::Listener
 {
 public:
     //==============================================================================
@@ -42,9 +43,21 @@ public:
     void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
     
 private:
+
+	//Slider Listener
+	void sliderValueChanged(Slider* slider) override;
+
     Audio& audio;
     
 	std::array <SamplePlayerGui, Audio::NumOfFilePlayers> filePlayerGui;
+
+	Slider verbSlider;
+	Label verbSliderLabel;
+
+	Slider levelSlider;
+	Label levelSliderLabel;
+
+	std::array <TextButton, 8> pads;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

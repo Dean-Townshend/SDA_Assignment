@@ -1,15 +1,50 @@
 #include "MainComponent.h"
 
-//==============================================================================
 MainComponent::MainComponent (Audio& a) : audio (a)
 {
 	for (int i = 0; i < Audio::NumOfFilePlayers; i++)
 	{
 		filePlayerGui[i].setFilePlayer(audio.getFilePlayer(i));
-		addAndMakeVisible(filePlayerGui[i]);
 	}	
-    
-    setSize (600, 750);
+  
+	addAndMakeVisible(filePlayerGui[0]);
+
+	verbSlider.addListener(this);
+	addAndMakeVisible(verbSlider);
+	verbSlider.setSliderStyle(Slider::LinearHorizontal);
+	verbSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
+	verbSlider.setRange(0.1, 5.0);
+	verbSlider.setValue(0.1);
+	verbSlider.setTextValueSuffix(" *");
+	verbSlider.setNumDecimalPlacesToDisplay(3);
+
+	//Labels
+	verbSliderLabel.setText("Reverb:", dontSendNotification);
+	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
+	verbSliderLabel.setColour(Label::textColourId, Colours::darkslategrey);
+	addAndMakeVisible(verbSliderLabel);
+
+	levelSlider.addListener(this);
+	addAndMakeVisible(levelSlider);
+	levelSlider.setSliderStyle(Slider::LinearHorizontal);
+	levelSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
+	levelSlider.setRange(0.1, 5.0);
+	levelSlider.setValue(0.1);
+	levelSlider.setTextValueSuffix(" *");
+	levelSlider.setNumDecimalPlacesToDisplay(3);
+
+	//Labels
+	levelSliderLabel.setText("Volume:", dontSendNotification);
+	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
+	levelSliderLabel.setColour(Label::textColourId, Colours::darkslategrey);
+	addAndMakeVisible(levelSliderLabel);
+
+	for (int i = 0; i < 8; i++)
+	{
+		addAndMakeVisible(pads[i]);
+	}
+
+    setSize (600, 600);
 }
 
 MainComponent::~MainComponent()
@@ -21,18 +56,69 @@ MainComponent::~MainComponent()
 void MainComponent::resized()
 {
 	Rectangle<int> area = getLocalBounds();
-	Rectangle<int> GuiArea = area.removeFromLeft(area.getWidth()/2);
+	Rectangle<int> guiArea = area;
+	Rectangle<int> controlGuiArea = guiArea.removeFromRight(area.getWidth() * 0.5);
 
-	const int NumElements = Audio::NumOfFilePlayers;
-	int heightPerEl = area.getHeight() / NumElements;
+	filePlayerGui[0].setBounds(controlGuiArea);
 
-	std::array<Rectangle<int>, Audio::NumOfFilePlayers> guiComp;
+	
+	Rectangle<int> padGuiArea = guiArea.removeFromTop(guiArea.getHeight()*0.8);
 
-	for (int i = 0; i < Audio::NumOfFilePlayers; i++)
+
+	int heightPerRow = padGuiArea.getHeight()/4;
+	int widthPerRow = padGuiArea.getWidth()/2;
+
+	std::array < Rectangle<int>, 4> padRows;
+	std::array < Rectangle<int>, 8> padButts;
+
+
+	for (int i = 0; i < 4; i++)
 	{
-		guiComp[i] = GuiArea.removeFromTop(heightPerEl);
-		filePlayerGui[i].setBounds(guiComp[i]);
-	}	
+		padRows[i] = padGuiArea.removeFromTop(heightPerRow);
+	}
+	
+		for (int b = 0; b < 2; b++)
+		{
+			padButts[b] = padRows[0].removeFromLeft(widthPerRow);
+		}
+
+		for (int b = 2; b < 4; b++)
+		{
+			padButts[b] = padRows[1].removeFromLeft(widthPerRow);
+		}
+
+		for (int b = 4; b < 6; b++)
+		{
+			padButts[b] = padRows[2].removeFromLeft(widthPerRow);
+		}
+
+		for (int b = 6; b < 8; b++)
+		{
+			padButts[b] = padRows[3].removeFromLeft(widthPerRow);
+		}
+
+		for (int i = 0; i < 8; i++)
+		{
+			pads[i].setBounds(padButts[i]);
+
+		}
+
+
+		Rectangle<int> masterControls = guiArea;
+
+		Rectangle<int> reverb = masterControls.removeFromTop(masterControls.getHeight() / 2);
+		Rectangle<int> reverbSlider = reverb.removeFromRight(reverb.getWidth() * 0.7);
+		Rectangle<int> reverbLabel = reverb;
+
+		verbSlider.setBounds(reverbSlider);
+		verbSliderLabel.setBounds(reverbLabel);
+
+		Rectangle<int> level = masterControls;
+		Rectangle<int> levelSliderArea = level.removeFromRight(level.getWidth() * 0.7);
+		Rectangle<int> levelLabel = level;
+
+		levelSlider.setBounds(levelSliderArea);
+		levelSliderLabel.setBounds(levelLabel);
 }
 
 //MenuBarCallbacks==============================================================
@@ -63,4 +149,13 @@ void MainComponent::menuItemSelected (int menuItemID, int topLevelMenuIndex)
                                            &audioSettingsComp, this, Colours::dimgrey, true);
         }
     }
+}
+
+void MainComponent::sliderValueChanged(Slider* slider)
+{
+	if (slider == &verbSlider)
+	{
+		//DBG(verbSlider.getValue());
+	}
+
 }
