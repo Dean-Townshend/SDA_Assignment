@@ -42,22 +42,35 @@ void Audio::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& mes
 		{
 			filePlayer[0].setPlaying(true);
 		}
-
-		if (message.getNoteNumber() == 61)
+		if (message.getNoteNumber() == 62)
 		{
 			filePlayer[1].setPlaying(true);
 		}
-		if (message.getNoteNumber() == 62)
+		if (message.getNoteNumber() == 64)
 		{
 			filePlayer[2].setPlaying(true);
 		}
-		if (message.getNoteNumber() == 64)
+		if (message.getNoteNumber() == 66)
 		{
 			filePlayer[3].setPlaying(true);
 		}
-		
+		if (message.getNoteNumber() == 68)
+		{
+			filePlayer[4].setPlaying(true);
+		}
+		if (message.getNoteNumber() == 70)
+		{
+			filePlayer[5].setPlaying(true);
+		}
+		if (message.getNoteNumber() == 72)
+		{
+			filePlayer[6].setPlaying(true);
+		}
+		if (message.getNoteNumber() == 74)
+		{
+			filePlayer[7].setPlaying(true);
+		}
 	}
-
 
 }
 
