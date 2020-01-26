@@ -36,9 +36,11 @@ public:
 		int numSamples) override;
 	void audioDeviceAboutToStart(AudioIODevice* device) override;
 	void audioDeviceStopped() override;
+
 private:
 	AudioDeviceManager audioDeviceManager;
 	AudioSourcePlayer audioSourcePlayer;
+	ReverbAudioSource verbUnit;
 	
 	std::array <FilePlayer, NumOfFilePlayers> filePlayer;
 
