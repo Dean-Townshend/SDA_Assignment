@@ -46,10 +46,12 @@ private:
 	AudioDeviceManager audioDeviceManager;
 	AudioSourcePlayer audioSourcePlayer;
 	MixerAudioSource mixer;
+
+
 	ReverbAudioSource verbUnit;
 	Reverb::Parameters verbParams;
 
-	float levelVal;
+	float levelVal = 0.5;
 	
 
 	

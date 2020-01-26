@@ -123,10 +123,7 @@ void Audio::audioDeviceStopped()
 
 void Audio::setReverbParam (double wetdryLevel)
 {
-	verbParams.damping = 0.0;
-	verbParams.freezeMode = 0.1;
-	verbParams.roomSize = 0.5;
-	verbParams.width = 0.5;
+	
 
 	verbParams.wetLevel = wetdryLevel;
 	verbParams.dryLevel = ((wetdryLevel - 0.0) / (1.0 - 0.0)) * (0.0 - 1.0) + 1.0;

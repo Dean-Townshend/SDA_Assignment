@@ -30,6 +30,7 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 	levelSlider.setValue(0.0);
 	levelSlider.setTextValueSuffix(" *");
 	levelSlider.setNumDecimalPlacesToDisplay(3);
+	levelSlider.setValue(0.5);
 
 	//Labels
 	levelSliderLabel.setText("Volume:", dontSendNotification);

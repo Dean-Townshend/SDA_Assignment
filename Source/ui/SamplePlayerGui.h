@@ -58,8 +58,8 @@ private:
 	Slider pitchSlider;
 	Label pitchSliderLabel;
 
-	Slider finePitchSlider;
-	Label finePitchSliderLabel;
+	Slider levelSlider;
+	Label levelSliderLabel;
 
 	PlayheadPositionOverlay startPositionOverlay;
 	PlayheadPositionOverlay endPositionOverlay;
