@@ -133,8 +133,8 @@ void SamplePlayerGui::resized()
 	pitchSlider.setBounds(pitchArea);
 	finePitchSlider.setBounds(finePitchArea);
 
-	pitchSlider.setTextBoxStyle(Slider::TextBoxAbove, false, pitchArea.getWidth(), pitchArea.getHeight() / 4);
-	finePitchSlider.setTextBoxStyle(Slider::TextBoxAbove, false, finePitchArea.getWidth(), finePitchArea.getHeight() / 4);
+	pitchSlider.setTextBoxStyle(Slider::TextBoxBelow, false, pitchArea.getWidth(), pitchArea.getHeight() / 4);
+	finePitchSlider.setTextBoxStyle(Slider::TextBoxBelow, false, finePitchArea.getWidth(), finePitchArea.getHeight() / 4);
 	
 	pitchSliderLabel.setBounds(pitchLabelArea);
 	pitchSliderLabel.setJustificationType(Justification::centred);

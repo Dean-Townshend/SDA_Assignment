@@ -11,8 +11,8 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 	addAndMakeVisible(verbSlider);
 	verbSlider.setSliderStyle(Slider::LinearHorizontal);
 	verbSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
-	verbSlider.setRange(0.1, 5.0);
-	verbSlider.setValue(0.1);
+	verbSlider.setRange(0.0, 1.0);
+	verbSlider.setValue(0.0);
 	verbSlider.setTextValueSuffix(" *");
 	verbSlider.setNumDecimalPlacesToDisplay(3);
 
@@ -26,8 +26,8 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 	addAndMakeVisible(levelSlider);
 	levelSlider.setSliderStyle(Slider::LinearHorizontal);
 	levelSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
-	levelSlider.setRange(0.1, 5.0);
-	levelSlider.setValue(0.1);
+	levelSlider.setRange(0.0, 1.0);
+	levelSlider.setValue(0.0);
 	levelSlider.setTextValueSuffix(" *");
 	levelSlider.setNumDecimalPlacesToDisplay(3);
 
@@ -208,7 +208,11 @@ void MainComponent::sliderValueChanged(Slider* slider)
 {
 	if (slider == &verbSlider)
 	{
-		//DBG(verbSlider.getValue());
+		audio.setReverbParam(verbSlider.getValue());
+	}
+	if (slider == &levelSlider)
+	{
+		audio.setLevel(levelSlider.getValue());
 	}
 
 }

@@ -37,12 +37,22 @@ public:
 	void audioDeviceAboutToStart(AudioIODevice* device) override;
 	void audioDeviceStopped() override;
 
+	void setReverbParam(double wetdryLevel);
+	void setLevel(float levelSliderval);
+
 private:
-	AudioDeviceManager audioDeviceManager;
-	AudioSourcePlayer audioSourcePlayer;
-	ReverbAudioSource verbUnit;
 	
 	std::array <FilePlayer, NumOfFilePlayers> filePlayer;
-
+	AudioDeviceManager audioDeviceManager;
+	AudioSourcePlayer audioSourcePlayer;
 	MixerAudioSource mixer;
+	ReverbAudioSource verbUnit;
+	Reverb::Parameters verbParams;
+
+	float levelVal;
+	
+
+	
+
+
 };

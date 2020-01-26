@@ -1,16 +1,23 @@
 #include "Audio.h"
 
-Audio::Audio()
+Audio::Audio() : verbUnit(&mixer, false)
 {
-    audioDeviceManager.initialiseWithDefaultDevices (1, 2); //1 inputs, 2 outputs
+    audioDeviceManager.initialiseWithDefaultDevices (0, 2); //1 inputs, 2 outputs
     
 	for (int i = 0; i < NumOfFilePlayers; i++)
 	{
 		mixer.addInputSource(&filePlayer[i], false);
-	}
+	}	
 
-    //set the filePlayer as the audio source
-    audioSourcePlayer.setSource (&mixer);
+	verbParams.damping = 0.0;
+	verbParams.freezeMode = 0.1;
+	verbParams.roomSize = 0.5;
+	verbParams.width = 0.5;
+	verbParams.wetLevel = 0.0;
+	verbParams.dryLevel = 1.0;
+	verbUnit.setParameters(verbParams);
+
+    audioSourcePlayer.setSource (&verbUnit);
     
     audioDeviceManager.addMidiInputCallback (String(), this);
     audioDeviceManager.addAudioCallback (this);
@@ -94,8 +101,8 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
         float fileOutL = *outL;
         float fileOutR = *outR;
         
-        *outL = fileOutL;
-        *outR = fileOutR;
+        *outL = fileOutL *levelVal;
+        *outR = fileOutR *levelVal;
         
         inL++;
         outL++;
@@ -112,4 +119,25 @@ void Audio::audioDeviceAboutToStart (AudioIODevice* device)
 void Audio::audioDeviceStopped()
 {
     audioSourcePlayer.audioDeviceStopped();
+}
+
+void Audio::setReverbParam (double wetdryLevel)
+{
+	verbParams.damping = 0.0;
+	verbParams.freezeMode = 0.1;
+	verbParams.roomSize = 0.5;
+	verbParams.width = 0.5;
+
+	verbParams.wetLevel = wetdryLevel;
+	verbParams.dryLevel = ((wetdryLevel - 0.0) / (1.0 - 0.0)) * (0.0 - 1.0) + 1.0;
+	DBG(verbParams.dryLevel);
+	DBG(verbParams.wetLevel);
+
+	verbUnit.setParameters(verbParams);
+}
+
+void Audio::setLevel(float levelSliderval)
+{
+	levelVal = levelSliderval;
+	DBG(levelSliderval);
 }
