@@ -2,13 +2,14 @@
 
 Audio::Audio() : verbUnit(&mixer, false)
 {
-    audioDeviceManager.initialiseWithDefaultDevices (0, 2); //1 inputs, 2 outputs
+    audioDeviceManager.initialiseWithDefaultDevices (0, 2);
     
 	for (int i = 0; i < NumOfFilePlayers; i++)
 	{
 		mixer.addInputSource(&filePlayer[i], false);
 	}	
 
+	//Reverb default param values
 	verbParams.damping = 0.0;
 	verbParams.freezeMode = 0.1;
 	verbParams.roomSize = 0.5;
@@ -28,10 +29,8 @@ Audio::~Audio()
     audioDeviceManager.removeAudioCallback (this);
     audioDeviceManager.removeMidiInputCallback (String(), this);
     
-    //remove the file player from the source
-    audioSourcePlayer.setSource (nullptr);
-
 	mixer.removeAllInputs();
+	audioSourcePlayer.setSource(nullptr);
 }
 
 FilePlayer* Audio::getFilePlayer(int playerNum)
@@ -82,10 +81,10 @@ void Audio::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& mes
 }
 
 void Audio::audioDeviceIOCallback (const float** inputChannelData,
-                                           int numInputChannels,
-                                           float** outputChannelData,
-                                           int numOutputChannels,
-                                           int numSamples)
+                                   int numInputChannels,
+                                   float** outputChannelData,
+                                   int numOutputChannels,
+                                   int numSamples)
 {
     // get the audio from our file player - player puts samples in the output buffer
     audioSourcePlayer.audioDeviceIOCallback (inputChannelData, numInputChannels, outputChannelData, numOutputChannels, numSamples);
@@ -110,7 +109,6 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
     }
 }
 
-
 void Audio::audioDeviceAboutToStart (AudioIODevice* device)
 {
     audioSourcePlayer.audioDeviceAboutToStart (device);
@@ -123,13 +121,10 @@ void Audio::audioDeviceStopped()
 
 void Audio::setReverbParam (double wetdryLevel)
 {
-	
-
 	verbParams.wetLevel = wetdryLevel;
-	verbParams.dryLevel = ((wetdryLevel - 0.0) / (1.0 - 0.0)) * (0.0 - 1.0) + 1.0;
+	verbParams.dryLevel = 1.0 - wetdryLevel;
 	DBG(verbParams.dryLevel);
 	DBG(verbParams.wetLevel);
-
 	verbUnit.setParameters(verbParams);
 }
 

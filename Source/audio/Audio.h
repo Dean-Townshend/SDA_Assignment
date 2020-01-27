@@ -30,10 +30,11 @@ public:
 	void handleIncomingMidiMessage(MidiInput* source, const MidiMessage& message) override;
 
 	void audioDeviceIOCallback(const float** inputChannelData,
-		int numInputChannels,
-		float** outputChannelData,
-		int numOutputChannels,
-		int numSamples) override;
+							   int numInputChannels,
+							   float** outputChannelData,
+							   int numOutputChannels,
+							   int numSamples) override;
+
 	void audioDeviceAboutToStart(AudioIODevice* device) override;
 	void audioDeviceStopped() override;
 
@@ -42,19 +43,14 @@ public:
 
 private:
 	
-	std::array <FilePlayer, NumOfFilePlayers> filePlayer;
 	AudioDeviceManager audioDeviceManager;
+	std::array <FilePlayer, NumOfFilePlayers> filePlayer;
+	
 	AudioSourcePlayer audioSourcePlayer;
 	MixerAudioSource mixer;
-
-
 	ReverbAudioSource verbUnit;
 	Reverb::Parameters verbParams;
 
 	float levelVal = 0.5;
-	
-
-	
-
 
 };

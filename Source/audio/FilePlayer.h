@@ -36,7 +36,8 @@ public:
 	
 
 private:
-    std::unique_ptr<AudioFormatReaderSource> currentAudioFileSource;    //reads audio from the file
+
+    std::unique_ptr<AudioFormatReaderSource> currentAudioFileSource;    //reads from the file
     AudioTransportSource audioTransportSource;	        // this controls the playback of a positionable audio stream, handling the
                                                         // starting/stopping and sample-rate conversion
     TimeSliceThread thread;                             //thread for the transport source

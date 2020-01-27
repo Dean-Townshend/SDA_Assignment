@@ -60,7 +60,6 @@ MainComponent::~MainComponent()
     
 }
 
-//==============================================================================
 void MainComponent::resized()
 {
 	Rectangle<int> area = getLocalBounds();
@@ -108,7 +107,7 @@ void MainComponent::resized()
 		padButton[i].setBounds(padButts[i]);
 	}
 
-	//Controls
+	//Master controls
 	Rectangle<int> masterControls = guiArea;
 
 	Rectangle<int> reverb = masterControls.removeFromTop(masterControls.getHeight() / 2);

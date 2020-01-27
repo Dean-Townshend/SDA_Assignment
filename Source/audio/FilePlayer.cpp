@@ -9,7 +9,7 @@ FilePlayer::FilePlayer() : thread("FilePlayThread")
 FilePlayer::~FilePlayer()
 {
 	resamplingAudioSource->releaseResources();
-    audioTransportSource.setSource (nullptr);   //unload the current filennnnn
+    audioTransportSource.setSource (nullptr);   
     thread.stopThread (100);
 }
 
@@ -70,7 +70,6 @@ void FilePlayer::loadFile(const File& newFile)
     }
 }
 
-//AudioSource
 void FilePlayer::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     resamplingAudioSource->prepareToPlay (samplesPerBlockExpected, sampleRate);
