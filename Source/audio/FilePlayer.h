@@ -35,7 +35,11 @@ public:
 
 	void setPlaybackRate(double newRate);
 
+	void setLevel(double levelSliderval);
+
 private:
+
+	void setAdsrSampleRate(double sampleRate);
 
     std::unique_ptr<AudioFormatReaderSource> currentAudioFileSource;    //reads from the file
     AudioTransportSource audioTransportSource;	        // this controls the playback of a positionable audio stream, handling the
@@ -44,4 +48,7 @@ private:
 	std::unique_ptr<ResamplingAudioSource> resamplingAudioSource;
 
 	ADSR envelope;
+	ADSR::Parameters envParams;
+
+	double levelVal = 0.5;
 };

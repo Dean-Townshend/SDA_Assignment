@@ -66,12 +66,12 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	addAndMakeVisible(levelSlider);
 	levelSlider.setSliderStyle(Slider::Rotary);
 	levelSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
-	levelSlider.setRange(0.1, 5.0);
-	levelSlider.setValue(0.1);
+	levelSlider.setRange(0.0, 2.0);
+	levelSlider.setValue(1.0);
 	levelSlider.setTextValueSuffix(" *");
 	levelSlider.setNumDecimalPlacesToDisplay(3);
 	//Level slider label
-	levelSliderLabel.setText("Fine Pitch", dontSendNotification);
+	levelSliderLabel.setText("Gain", dontSendNotification);
 	levelSliderLabel.setColour(Label::textColourId, Colours::black);
 	addAndMakeVisible(levelSliderLabel);
 
@@ -233,6 +233,11 @@ void SamplePlayerGui::sliderValueChanged(Slider* slider)
 	{
 		//DBG(pitchSlider.getValue());
 		filePlayer->setPlaybackRate(pitchSlider.getValue());
+	}
+	if (slider == &levelSlider)
+	{
+		//DBG(pitchSlider.getValue());
+		filePlayer->setLevel(levelSlider.getValue());
 	}
 }
 
