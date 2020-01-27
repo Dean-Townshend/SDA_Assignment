@@ -70,6 +70,12 @@ void FilePlayer::loadFile(const File& newFile)
     }
 }
 
+
+void FilePlayer::setPlaybackRate(double newRate)
+{
+	resamplingAudioSource->setResamplingRatio(newRate);
+}
+
 void FilePlayer::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     resamplingAudioSource->prepareToPlay (samplesPerBlockExpected, sampleRate);
@@ -82,10 +88,14 @@ void FilePlayer::releaseResources()
 
 void FilePlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
+
+	juce::AudioBuffer<float> buff = *bufferToFill.buffer;
+	int stasamp = bufferToFill.startSample;
+	int num = bufferToFill.numSamples;
+
+	envelope.applyEnvelopeToBuffer(buff, stasamp, num);
+
     resamplingAudioSource->getNextAudioBlock (bufferToFill);
 }
 
-void FilePlayer::setPlaybackRate(double newRate)
-{
-	resamplingAudioSource->setResamplingRatio(newRate);
-}
+

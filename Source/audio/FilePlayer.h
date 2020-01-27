@@ -43,4 +43,5 @@ private:
     TimeSliceThread thread;                             //thread for the transport source
 	std::unique_ptr<ResamplingAudioSource> resamplingAudioSource;
 
+	ADSR envelope;
 };
