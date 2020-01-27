@@ -6,6 +6,7 @@
 class FilePlayer :  public AudioSource
 {
 public:
+
     /** Constructor */
     FilePlayer();
     
@@ -33,7 +34,6 @@ public:
 	double getLength();
 
 	void setPlaybackRate(double newRate);
-	
 
 private:
 
