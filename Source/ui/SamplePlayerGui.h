@@ -13,60 +13,46 @@ class SamplePlayerGui : public  Component,
 {
 public:
 	
-
-    /** constructor - receives a reference to a FilePlayer object to control */
     SamplePlayerGui();
     
     /** Destructor */
     ~SamplePlayerGui();
     
-    /** sets the file player that this gui controls */
     void setFilePlayer (FilePlayer* fp);
 
 	void setNameLabelText(String name);
     
 	void paint(Graphics& g) override;
-    //Component
+    
     void resized() override;
 
 private:
 
-	AudioFormatManager formatManager;
-
-	//Button Listener
-    void buttonClicked (Button* button) override;
-
-	//Slider Listener
-	void sliderValueChanged (Slider* slider) override;
+	void buttonClicked (Button* button) override; //Button Listener
+	void sliderValueChanged (Slider* slider) override; //Slider Listener
+    void filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged) override; //FilenameComponentListener
     
-    //FilenameComponentListener
-    void filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged) override;
-    
-    TextButton playButton {"Trigger"};
-    std::unique_ptr<FilenameComponent> fileChooser;
-    
-	FilePlayer* filePlayer {nullptr};
+	FilePlayer* filePlayer{ nullptr };
+	AudioFormatManager formatManager;    
+	AudioTransportSource transportSource;
 
-	Label nameLabel;
-
-	Slider startPosSlider;
-	Slider endPosSlider;
-
-	Label startPosSliderLabel;
-	Label endPosSliderLabel;
-
-	Slider pitchSlider;
-	Label pitchSliderLabel;
-
-	Slider levelSlider;
-	Label levelSliderLabel;
-
+	//Gui Components 
+	Label currentPadLabel;
+	//Waveform view
 	PlayheadPositionOverlay startPositionOverlay;
 	PlayheadPositionOverlay endPositionOverlay;
-
-	AudioTransportSource transportSource;
 	AudioThumbnailCache thumbnailCache;
 	WaveformThumbnailComponent thumbnailComp;
-	
+	//Controls
+	Slider startPosSlider;
+	Slider endPosSlider;
+	Label startPosSliderLabel;
+	Label endPosSliderLabel;
+	Slider pitchSlider;
+	Label pitchSliderLabel;
+	Slider levelSlider;
+	Label levelSliderLabel;
+	TextButton padTriggerButton{ "Trigger" };
+	std::unique_ptr<FilenameComponent> fileChooser;
 
 };

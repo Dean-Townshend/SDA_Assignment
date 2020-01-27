@@ -3,8 +3,8 @@
 
 
 WaveformThumbnailComponent::WaveformThumbnailComponent (int sourceSamplesPerThumbnailSample,
-							 AudioFormatManager& formatManager,
-							 AudioThumbnailCache& cache) 
+														AudioFormatManager& formatManager,
+														AudioThumbnailCache& cache) 
 							: thumbnail(sourceSamplesPerThumbnailSample, formatManager, cache)
 {
 	thumbnail.addChangeListener(this);
@@ -34,16 +34,8 @@ void WaveformThumbnailComponent::paint(Graphics& g)
 
 void WaveformThumbnailComponent::paintIfFileLoaded(Graphics& g)
 {
-	g.fillAll(Colours::grey);
-
 	g.setColour(Colours::darkslategrey);
 	thumbnail.drawChannels(g, getLocalBounds(), 0.0, thumbnail.getTotalLength(), 1.0f);
-}
-
-void WaveformThumbnailComponent::changeListenerCallback(ChangeBroadcaster* source)
-{
-	if (source == &thumbnail)
-		thumbnailChanged();
 }
 
 void WaveformThumbnailComponent::paintIfNoFileLoaded(Graphics& g)
@@ -53,13 +45,18 @@ void WaveformThumbnailComponent::paintIfNoFileLoaded(Graphics& g)
 	g.drawFittedText("No File Loaded", getLocalBounds(), Justification::centred, 1);
 }
 
+void WaveformThumbnailComponent::changeListenerCallback(ChangeBroadcaster* source)
+{
+	if (source == &thumbnail) thumbnailChanged();
+}
+
 void WaveformThumbnailComponent::thumbnailChanged()
 {
 	repaint();
 }
 
 
-/******************************Position Overlay*****************************************/
+/************************************Position Overlay************************************************/
 
 PlayheadPositionOverlay::PlayheadPositionOverlay()
 {
@@ -86,17 +83,14 @@ void PlayheadPositionOverlay::paint(Graphics& g)
 	if (position > 0.0)
 	{
 		auto drawPosition = position * getWidth();
-
 		if (crosshairColour == "green")
 		{
 			g.setColour(Colours::green);
 		}
-
 		if (crosshairColour == "blue")
 		{
 			g.setColour(Colours::blue);
 		}
-
 		g.drawLine(drawPosition, 0.0f, drawPosition, (float)getHeight(), 1.0f);
 	}
 }

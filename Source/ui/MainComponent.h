@@ -5,11 +5,6 @@
 #include "SamplePlayerGui.h"
 #include "WaveformGui.h"
 
-//==============================================================================
-/*
-    This component lives inside our window, and this is where you should put all
-    your controls and content.
-*/
 class MainComponent   : public Component,
                         public MenuBarModel,
 						private Slider::Listener,
@@ -18,8 +13,6 @@ class MainComponent   : public Component,
 public:
 
 	std::array<String, 9 > notes = { "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "\0" };
-	
-    //==============================================================================
 
     /** Constructor */
 	MainComponent(Audio& a);
@@ -29,7 +22,7 @@ public:
 
     void resized() override;
     
-    //MenuBarEnums/Callbacks========================================================
+    //MenuBarEnums/Callbacks
     enum Menus
     {
         FileMenu = 0,
@@ -50,11 +43,8 @@ public:
     
 private:
 
-	//Slider Listener
-	void sliderValueChanged(Slider* slider) override;
-
-	//Button Listener
-	void buttonClicked(Button* button) override;
+	void sliderValueChanged(Slider* slider) override; //Slider Listener
+	void buttonClicked(Button* button) override; //Button Listener
 
 	int playerInView = 0;
 
@@ -62,12 +52,11 @@ private:
     
 	std::array <SamplePlayerGui, Audio::NumOfFilePlayers> filePlayerGui;
 
+	//GUI components 
 	Slider verbSlider;
 	Label verbSliderLabel;
-
 	Slider levelSlider;
 	Label levelSliderLabel;
-
 	std::array <TextButton, 8> padButton;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

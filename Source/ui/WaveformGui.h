@@ -1,15 +1,13 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include <string>
+//#include <string>
 
 class WaveformThumbnailComponent : public Component,
 								   private ChangeListener
 {
 
 public:
-
-	
 
 	WaveformThumbnailComponent (int sourceSamplesPerThumbnailSample,
 								 AudioFormatManager& formatManager,
@@ -35,7 +33,7 @@ private:
 };
 
 
-//------------------------------------------------------------------------------
+/*****************************************Playhead Overlay**********************************************/
 
 class PlayheadPositionOverlay : public Component,
 								public Timer
@@ -65,10 +63,6 @@ private:
 	double position = 0;
 	std::string crosshairColour;
 
-
-
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayheadPositionOverlay)
 
 };
-
-//------------------------------------------------------------------------------

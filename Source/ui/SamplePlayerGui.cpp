@@ -9,11 +9,11 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	formatManager.registerBasicFormats();
 
 	//Note name label
-	nameLabel.setText("Note", dontSendNotification);
-	nameLabel.setColour(Label::textColourId, Colours::darkslategrey);
-	nameLabel.setColour(Label::outlineColourId, Colours::darkslategrey);
-	nameLabel.setJustificationType(Justification::centred);
-	addAndMakeVisible(nameLabel);
+	currentPadLabel.setText("Note", dontSendNotification);
+	currentPadLabel.setColour(Label::textColourId, Colours::darkslategrey);
+	currentPadLabel.setColour(Label::outlineColourId, Colours::darkslategrey);
+	currentPadLabel.setJustificationType(Justification::centred);
+	addAndMakeVisible(currentPadLabel);
 
 	//Waveform view
 	addAndMakeVisible(&thumbnailComp);
@@ -76,8 +76,8 @@ thumbnailComp(512, formatManager, thumbnailCache)
 	addAndMakeVisible(levelSliderLabel);
 
 	//Button
-	playButton.addListener(this);
-	addAndMakeVisible(playButton);
+	padTriggerButton.addListener(this);
+	addAndMakeVisible(padTriggerButton);
 
 	//File chooser
 	fileChooser = std::make_unique<FilenameComponent>("audiofile",
@@ -108,14 +108,14 @@ void SamplePlayerGui::resized()
 
 	//Note name label that changes on which pad is selected 
 	Rectangle<int> nameArea = area.removeFromTop(area.getHeight() * 0.05);
-	nameLabel.setBounds(nameArea);
+	currentPadLabel.setBounds(nameArea);
 
 	/*********************************************Controls*************************************************************/
 	Rectangle<int> controlArea = area.removeFromBottom(area.getHeight()*0.5);
 	Rectangle<int> playArea = controlArea.removeFromBottom(controlArea.getHeight() * 0.3);
 	Rectangle<int> playButtArea = playArea.removeFromTop(playArea.getHeight()*0.6);
 	Rectangle<int> fileChooseArea = playArea;
-	playButton.setBounds(playButtArea);
+	padTriggerButton.setBounds(playButtArea);
 	fileChooser->setBounds(fileChooseArea);
 
 	Rectangle<int> SliderArea = controlArea;
@@ -165,13 +165,13 @@ void SamplePlayerGui::resized()
 
 void SamplePlayerGui::setNameLabelText(String name)
 {
-	nameLabel.setText(name, dontSendNotification);
+	currentPadLabel.setText(name, dontSendNotification);
 }
 
 //Button Listener
 void SamplePlayerGui::buttonClicked (Button* button)
 {
-    if (filePlayer != nullptr && button == &playButton)
+    if (filePlayer != nullptr && button == &padTriggerButton)
     {
 		DBG("tiggered");
         filePlayer->setPlaying( ! filePlayer->isPlaying());
