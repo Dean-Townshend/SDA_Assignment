@@ -50,7 +50,7 @@ private:
 
     Audio& audio;
     
-	std::array <SamplePlayerGui, Audio::NumOfFilePlayers> filePlayerGui;
+	std::array <SamplePlayerGui, Audio::NumOfFilePlayers> PadControlsGui;
 
 	//GUI components 
 	Slider verbSlider;

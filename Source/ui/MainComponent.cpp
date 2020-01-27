@@ -4,9 +4,10 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 {
 	for (int i = 0; i < Audio::NumOfFilePlayers; i++)
 	{
-		filePlayerGui[i].setFilePlayer(audio.getFilePlayer(i));
+		PadControlsGui[i].setFilePlayer(audio.getFilePlayer(i));
 	}	
   
+	//Reverb slider
 	verbSlider.addListener(this);
 	addAndMakeVisible(verbSlider);
 	verbSlider.setSliderStyle(Slider::LinearHorizontal);
@@ -15,13 +16,13 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 	verbSlider.setValue(0.0);
 	verbSlider.setTextValueSuffix(" *");
 	verbSlider.setNumDecimalPlacesToDisplay(3);
-
-	//Labels
+	//Verb Label
+	addAndMakeVisible(verbSliderLabel);
 	verbSliderLabel.setText("Reverb:", dontSendNotification);
 	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
 	verbSliderLabel.setColour(Label::textColourId, Colours::darkslategrey);
-	addAndMakeVisible(verbSliderLabel);
-
+	
+	//Level slider
 	levelSlider.addListener(this);
 	addAndMakeVisible(levelSlider);
 	levelSlider.setSliderStyle(Slider::LinearHorizontal);
@@ -31,13 +32,13 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 	levelSlider.setTextValueSuffix(" *");
 	levelSlider.setNumDecimalPlacesToDisplay(3);
 	levelSlider.setValue(0.5);
-
-	//Labels
+	//Level slider label
 	levelSliderLabel.setText("Volume:", dontSendNotification);
 	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
 	levelSliderLabel.setColour(Label::textColourId, Colours::darkslategrey);
 	addAndMakeVisible(levelSliderLabel);
 
+	//Pad Grid
 	for (int i = 0; i < 8; i++)
 	{
 		padButton[i].addListener(this);
@@ -45,9 +46,10 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 		padButton[i].setButtonText(notes[i]);
 	}
 
+	//Set the name labels of each sample player
 	for (int i = 0; i < Audio::NumOfFilePlayers; i++)
 	{
-		filePlayerGui[i].setNameLabelText(notes[i]);
+		PadControlsGui[i].setNameLabelText(notes[i]);
 	}
 
     setSize (600, 600);
@@ -63,11 +65,13 @@ void MainComponent::resized()
 {
 	Rectangle<int> area = getLocalBounds();
 	Rectangle<int> guiArea = area;
-	Rectangle<int> controlGuiArea = guiArea.removeFromRight(area.getWidth() * 0.5);
-	
-	filePlayerGui[playerInView].setBounds(controlGuiArea);
-	addAndMakeVisible(filePlayerGui[playerInView]);
 
+	//Pad controls layout
+	Rectangle<int> padControlGuiArea = guiArea.removeFromRight(area.getWidth() * 0.5);
+	PadControlsGui[playerInView].setBounds(padControlGuiArea);
+	addAndMakeVisible(PadControlsGui[playerInView]);
+
+	//Pad grid layout
 	Rectangle<int> padGuiArea = guiArea.removeFromTop(guiArea.getHeight()*0.8);
 
 	int heightPerRow = padGuiArea.getHeight()/4;
@@ -76,54 +80,50 @@ void MainComponent::resized()
 	std::array < Rectangle<int>, 4> padRows;
 	std::array < Rectangle<int>, 8> padButts;
 
-
+	//Remove a section for each row
 	for (int i = 0; i < 4; i++)
 	{
 		padRows[i] = padGuiArea.removeFromTop(heightPerRow);
 	}
-	
-		for (int b = 0; b < 2; b++)
-		{
-			padButts[b] = padRows[0].removeFromLeft(widthPerRow);
-		}
 
-		for (int b = 2; b < 4; b++)
-		{
-			padButts[b] = padRows[1].removeFromLeft(widthPerRow);
-		}
+	//Remove a section of each row for pads
+	for (int b = 0; b < 2; b++)
+	{
+		padButts[b] = padRows[0].removeFromLeft(widthPerRow);
+	}
+	for (int b = 2; b < 4; b++)
+	{
+		padButts[b] = padRows[1].removeFromLeft(widthPerRow);
+	}
+	for (int b = 4; b < 6; b++)
+	{
+		padButts[b] = padRows[2].removeFromLeft(widthPerRow);
+	}
+	for (int b = 6; b < 8; b++)
+	{
+		padButts[b] = padRows[3].removeFromLeft(widthPerRow);
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		padButton[i].setBounds(padButts[i]);
+	}
 
-		for (int b = 4; b < 6; b++)
-		{
-			padButts[b] = padRows[2].removeFromLeft(widthPerRow);
-		}
+	//Controls
+	Rectangle<int> masterControls = guiArea;
 
-		for (int b = 6; b < 8; b++)
-		{
-			padButts[b] = padRows[3].removeFromLeft(widthPerRow);
-		}
+	Rectangle<int> reverb = masterControls.removeFromTop(masterControls.getHeight() / 2);
+	Rectangle<int> reverbSlider = reverb.removeFromRight(reverb.getWidth() * 0.7);
+	Rectangle<int> reverbLabel = reverb;
 
-		for (int i = 0; i < 8; i++)
-		{
-			padButton[i].setBounds(padButts[i]);
+	verbSlider.setBounds(reverbSlider);
+	verbSliderLabel.setBounds(reverbLabel);
 
-		}
+	Rectangle<int> level = masterControls;
+	Rectangle<int> levelSliderArea = level.removeFromRight(level.getWidth() * 0.7);
+	Rectangle<int> levelLabel = level;
 
-		Rectangle<int> masterControls = guiArea;
-
-		Rectangle<int> reverb = masterControls.removeFromTop(masterControls.getHeight() / 2);
-		Rectangle<int> reverbSlider = reverb.removeFromRight(reverb.getWidth() * 0.7);
-		Rectangle<int> reverbLabel = reverb;
-
-		verbSlider.setBounds(reverbSlider);
-		verbSliderLabel.setBounds(reverbLabel);
-
-		Rectangle<int> level = masterControls;
-		Rectangle<int> levelSliderArea = level.removeFromRight(level.getWidth() * 0.7);
-		Rectangle<int> levelLabel = level;
-
-		levelSlider.setBounds(levelSliderArea);
-		levelSliderLabel.setBounds(levelLabel);
-
+	levelSlider.setBounds(levelSliderArea);
+	levelSliderLabel.setBounds(levelLabel);
 }
 
 //MenuBarCallbacks==============================================================
@@ -159,7 +159,7 @@ void MainComponent::menuItemSelected (int menuItemID, int topLevelMenuIndex)
 
 void MainComponent::buttonClicked(Button* button)
 {
-	removeChildComponent(&filePlayerGui[playerInView]);
+	removeChildComponent(&PadControlsGui[playerInView]); //Remove the previous pad controls shown 
 
 	if (button == &padButton[0])
 	{
@@ -202,7 +202,7 @@ void MainComponent::buttonClicked(Button* button)
 		playerInView = 7;
 	}
 
-	resized();
+	resized(); //Redraws screen to show controls for updated selected pad
 }
 
 void MainComponent::sliderValueChanged(Slider* slider)
@@ -215,5 +215,4 @@ void MainComponent::sliderValueChanged(Slider* slider)
 	{
 		audio.setLevel(levelSlider.getValue());
 	}
-
 }
