@@ -6,21 +6,23 @@
 #include "WaveformGui.h"
 
 /** Gui for the FilePlayer class */
-class SamplePlayerGui : public  Component,
-						public  Timer,
-                        private Button::Listener,
-                        private FilenameComponentListener,
-						private Slider::Listener
+class FilePlayerGui : public  Component,
+					  public  Timer,
+                      private Button::Listener,
+                      private FilenameComponentListener,
+					  private Slider::Listener
 						
 {
 
 public:
 	
-    SamplePlayerGui();
+	/** Constructor */
+    FilePlayerGui();
     
     /** Destructor */
-    ~SamplePlayerGui();
+    ~FilePlayerGui();
     
+
     void setFilePlayer (FilePlayer* fp);
 
 	void setNameLabelText(String name);

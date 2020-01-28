@@ -2,7 +2,7 @@
 #include "SamplePlayerGui.h"
 #include "WaveformGui.h"
 
-SamplePlayerGui::SamplePlayerGui(): startPositionOverlay(), thumbnailCache(5),
+FilePlayerGui::FilePlayerGui(): startPositionOverlay(), thumbnailCache(5),
 thumbnailComp(512, formatManager, thumbnailCache)
 {
 	//Format Manager
@@ -91,18 +91,18 @@ thumbnailComp(512, formatManager, thumbnailCache)
 
 }
 
-SamplePlayerGui::~SamplePlayerGui()
+FilePlayerGui::~FilePlayerGui()
 {
     
 }
 
-void SamplePlayerGui::paint(Graphics& g)
+void FilePlayerGui::paint(Graphics& g)
 {
 
 }
 
 //Layout of components
-void SamplePlayerGui::resized()
+void FilePlayerGui::resized()
 {
 	Rectangle<int> area = getLocalBounds(); //area rectangle is used to map out each element of the control section
 
@@ -157,18 +157,18 @@ void SamplePlayerGui::resized()
 	startPositionOverlay.setBounds(waveform);
 	endPositionOverlay.setBounds(waveform);
 	
-	startPositionOverlay.setCrosshairColour("green");
-	endPositionOverlay.setCrosshairColour("blue");
+	startPositionOverlay.setPlayHeadOverlayColour("green");
+	endPositionOverlay.setPlayHeadOverlayColour("blue");
 
 	thumbnailComp.setBounds(waveform);
 }
 
-void SamplePlayerGui::setNameLabelText(String name)
+void FilePlayerGui::setNameLabelText(String name)
 {
 	currentPadLabel.setText(name, dontSendNotification);
 }
 
-void SamplePlayerGui::timerCallback()
+void FilePlayerGui::timerCallback()
 {
 
 	DBG(filePlayer->getPosition());
@@ -182,7 +182,7 @@ void SamplePlayerGui::timerCallback()
 }
 
 //Button Listener
-void SamplePlayerGui::buttonClicked (Button* button)
+void FilePlayerGui::buttonClicked (Button* button)
 {
     /*if (filePlayer != nullptr && button == &padTriggerButton)
     {
@@ -208,13 +208,13 @@ void SamplePlayerGui::buttonClicked (Button* button)
 	}
 }
 
-void SamplePlayerGui::setFilePlayer (FilePlayer* fp)
+void FilePlayerGui::setFilePlayer (FilePlayer* fp)
 {
     filePlayer = fp;
 }
 
 //FilenameComponentListener
-void SamplePlayerGui::filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged)
+void FilePlayerGui::filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged)
 {
     if (fileComponentThatHasChanged == fileChooser.get())
     {
@@ -235,7 +235,7 @@ void SamplePlayerGui::filenameComponentChanged (FilenameComponent* fileComponent
 }
 
 //Slider Listener
-void SamplePlayerGui::sliderValueChanged(Slider* slider)
+void FilePlayerGui::sliderValueChanged(Slider* slider)
 {
 	if (slider == &startPosSlider)
 	{

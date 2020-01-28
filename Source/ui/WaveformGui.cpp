@@ -72,7 +72,7 @@ void PlayheadPositionOverlay::setPosition(double pos)
 	position = pos;
 }
 
-void PlayheadPositionOverlay::setCrosshairColour(std::string colour)
+void PlayheadPositionOverlay::setPlayHeadOverlayColour(std::string colour)
 {
 	crosshairColour = colour;
 }

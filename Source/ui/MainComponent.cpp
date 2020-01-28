@@ -208,7 +208,7 @@ void MainComponent::sliderValueChanged(Slider* slider)
 {
 	if (slider == &verbSlider)
 	{
-		audio.setReverbParam(verbSlider.getValue());
+		audio.setReverbParam(verbSlider.getValue(), 0.5);
 	}
 	if (slider == &levelSlider)
 	{

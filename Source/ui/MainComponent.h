@@ -5,6 +5,9 @@
 #include "SamplePlayerGui.h"
 #include "WaveformGui.h"
 
+
+/** Class responsible for placing all of the components in the window.
+*/
 class MainComponent   : public Component,
                         public MenuBarModel,
 						private Slider::Listener,
@@ -12,6 +15,7 @@ class MainComponent   : public Component,
 {
 public:
 
+	//This array is used to set the names of the button pads
 	std::array<String, 9 > notes = { "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "\0" };
 
     /** Constructor */
@@ -20,9 +24,11 @@ public:
     /** Destructor */
     ~MainComponent();
 
+	/** Resizes the components the fit the window.
+	*/
     void resized() override;
     
-    //MenuBarEnums/Callbacks
+    //MenuBarEnums
     enum Menus
     {
         FileMenu = 0,
@@ -36,13 +42,23 @@ public:
         
         NumFileItems
     };
-    StringArray getMenuBarNames() override;
-    PopupMenu getMenuForIndex (int topLevelMenuIndex, const String& menuName) override;
-    void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
 
+	/** Overidden
+	*/
+    StringArray getMenuBarNames() override;
+
+	/** Overidden
+	*/
+    PopupMenu getMenuForIndex (int topLevelMenuIndex, const String& menuName) override;
     
+	/** Overidden
+	*/
+	void menuItemSelected (int menuItemID, int topLevelMenuIndex) override;
+
 private:
 
+	/** Overidden
+	*/
 	void sliderValueChanged(Slider* slider) override; //Slider Listener
 	void buttonClicked(Button* button) override; //Button Listener
 
@@ -50,7 +66,7 @@ private:
 
     Audio& audio;
     
-	std::array <SamplePlayerGui, Audio::NumOfFilePlayers> PadControlsGui;
+	std::array <FilePlayerGui, Audio::NumOfFilePlayers> PadControlsGui;
 
 	//GUI components 
 	Slider verbSlider;
