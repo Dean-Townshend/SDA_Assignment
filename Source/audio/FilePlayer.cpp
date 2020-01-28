@@ -18,9 +18,22 @@ void FilePlayer::setPosition(double newPosition)
 	audioTransportSource.setPosition(audioTransportSource.getLengthInSeconds() * newPosition);
 }
 
+void FilePlayer::setEndPosition(double endPosition)
+{
+	transportEndPosition = audioTransportSource.getLengthInSeconds() * endPosition;
+}
+
 double FilePlayer::getPosition()
 {
+	//DBG("getposccaled");
+	DBG(audioTransportSource.getCurrentPosition());
 	return audioTransportSource.getCurrentPosition();
+
+}
+
+double FilePlayer::getEndPosition()
+{
+	return transportEndPosition;
 }
 
 double FilePlayer::getLength()
@@ -30,12 +43,11 @@ double FilePlayer::getLength()
 
 void FilePlayer::setPlaying (bool newState)//for start needs cahnging
 {
-    if(newState == true)
-    {
-        //audioTransportSource.setPosition (0.0);
-        audioTransportSource.start();
-    }
-    else
+	if (newState == true)
+	{
+		audioTransportSource.start();
+	}
+	else
     {
         audioTransportSource.stop();
     }

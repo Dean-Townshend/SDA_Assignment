@@ -29,7 +29,11 @@ public:
 
 	void setPosition(double newPosition);
 
+	void setEndPosition(double endPosition);
+
 	double getPosition();
+
+	double getEndPosition();
 
 	double getLength();
 
@@ -51,4 +55,6 @@ private:
 	ADSR::Parameters envParams;
 
 	double levelVal = 0.5;
+
+	float transportEndPosition = audioTransportSource.getLengthInSeconds();
 };

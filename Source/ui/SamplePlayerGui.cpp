@@ -168,25 +168,43 @@ void SamplePlayerGui::setNameLabelText(String name)
 	currentPadLabel.setText(name, dontSendNotification);
 }
 
+void SamplePlayerGui::timerCallback()
+{
+
+	DBG(filePlayer->getPosition());
+
+	if (filePlayer->getPosition() > filePlayer->getEndPosition())
+	{
+		filePlayer->setPlaying(false);
+		DBG("stopped");
+		Timer::stopTimer();
+	}
+}
+
 //Button Listener
 void SamplePlayerGui::buttonClicked (Button* button)
 {
-    if (filePlayer != nullptr && button == &padTriggerButton)
+    /*if (filePlayer != nullptr && button == &padTriggerButton)
     {
+		filePlayer->setPosition(startPosSlider.getValue());
 		DBG("tiggered");
         filePlayer->setPlaying( ! filePlayer->isPlaying());
-		filePlayer->setPosition(startPosSlider.getValue());
-    }
 
-	/*if (filePlayer->isPlaying() == false && button == &playButton)
+    }*/
+
+	if (filePlayer != nullptr && filePlayer->isPlaying() == false && button == &padTriggerButton)
 	{
-	
+		DBG("tiggered");
+		Timer::startTimer(25);
+		filePlayer->setPosition(startPosSlider.getValue());
+		filePlayer->setPlaying(true);
+		
 	}
 
-	if (filePlayer->isPlaying() == true && button == &playButton)
+	if (filePlayer != nullptr && filePlayer->isPlaying() == true && button == &padTriggerButton)
 	{
-	
-	}*/
+		Timer::stopTimer();
+	}
 }
 
 void SamplePlayerGui::setFilePlayer (FilePlayer* fp)
@@ -227,6 +245,7 @@ void SamplePlayerGui::sliderValueChanged(Slider* slider)
 	if (slider == &endPosSlider)
 	{
 		//DBG(startPosSlider.getValue());
+		filePlayer->setEndPosition(endPosSlider.getValue());
 		endPositionOverlay.setPosition(endPosSlider.getValue());
 	}
 	if (slider == &pitchSlider)

@@ -1,6 +1,6 @@
 #include "Audio.h"
 
-Audio::Audio() : verbUnit(&mixer, true)
+Audio::Audio() : verbUnit(&mixer, false)
 {
     audioDeviceManager.initialiseWithDefaultDevices (0, 2);
     
