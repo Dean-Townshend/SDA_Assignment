@@ -7,10 +7,13 @@
 
 /** Gui for the FilePlayer class */
 class SamplePlayerGui : public  Component,
+						public  Timer,
                         private Button::Listener,
                         private FilenameComponentListener,
 						private Slider::Listener
+						
 {
+
 public:
 	
     SamplePlayerGui();
@@ -26,11 +29,14 @@ public:
     
     void resized() override;
 
+	void timerCallback()override;
+
 private:
 
 	void buttonClicked (Button* button) override; //Button Listener
 	void sliderValueChanged (Slider* slider) override; //Slider Listener
     void filenameComponentChanged (FilenameComponent* fileComponentThatHasChanged) override; //FilenameComponentListener
+	
     
 	FilePlayer* filePlayer{ nullptr };
 	AudioFormatManager formatManager;    

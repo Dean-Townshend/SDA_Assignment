@@ -65,7 +65,7 @@ PlayheadPositionOverlay::PlayheadPositionOverlay()
 
 PlayheadPositionOverlay::~PlayheadPositionOverlay()
 {
-
+	stopTimer();
 }
 
 void PlayheadPositionOverlay::setPosition(double pos)
