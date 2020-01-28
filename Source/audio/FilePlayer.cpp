@@ -112,51 +112,51 @@ void FilePlayer::releaseResources()
 void FilePlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
 
-	/*auto* device = audioTransportSource->deviceManager.getCurrentAudioDevice();
-	auto activeInputChannels = device->getActiveInputChannels();
-	auto activeOutputChannels = device->getActiveOutputChannels();
-	auto maxInputChannels = activeInputChannels.getHighestBit() + 1;
-	auto maxOutputChannels = activeOutputChannels.getHighestBit() + 1;*/
+	/*
+		auto* device = audioTransportSource->deviceManager.getCurrentAudioDevice();
+		auto activeInputChannels = device->getActiveInputChannels();
+		auto activeOutputChannels = device->getActiveOutputChannels();
+		auto maxInputChannels = activeInputChannels.getHighestBit() + 1;
+		auto maxOutputChannels = activeOutputChannels.getHighestBit() + 1;
 
-	//auto level = (float)levelVal;
+		//auto level = (float)levelVal;
 
-	//for (auto channel = 0; channel < 1; ++channel)
-	//{
-	//	if ((!activeOutputChannels[channel]) || maxInputChannels == 0)
-	//	{
-	//		bufferToFill.buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
-	//	}
-	//	else
-	//	{
-	//		auto actualInputChannel = channel % maxInputChannels; // [1]
+		//for (auto channel = 0; channel < 1; ++channel)
+		//{
+		//	if ((!activeOutputChannels[channel]) || maxInputChannels == 0)
+		//	{
+		//		bufferToFill.buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
+		//	}
+		//	else
+		//	{
+		//		auto actualInputChannel = channel % maxInputChannels; // [1]
 
-	//		if (!activeInputChannels[channel]) // [2]
-	//		{
-	//			bufferToFill.buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
-	//		}
-	//		else // [3]
-	//		{
-	//			auto* inBuffer = bufferToFill.buffer->getReadPointer(actualInputChannel,
-	//				bufferToFill.startSample);
-	//			auto* outBuffer = bufferToFill.buffer->getWritePointer(channel, bufferToFill.startSample);
+		//		if (!activeInputChannels[channel]) // [2]
+		//		{
+		//			bufferToFill.buffer->clear(channel, bufferToFill.startSample, bufferToFill.numSamples);
+		//		}
+		//		else // [3]
+		//		{
+		//			auto* inBuffer = bufferToFill.buffer->getReadPointer(actualInputChannel,
+		//				bufferToFill.startSample);
+		//			auto* outBuffer = bufferToFill.buffer->getWritePointer(channel, bufferToFill.startSample);
 
-	//			for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
-	//				outBuffer[sample] = inBuffer[sample] * random.nextFloat() * level;
-	//		}
-	//	}
-	//}
-	
-	//AudioSourceChannelInfo bufferToFill2 (bufferToFill);
-	////bufferToFill2.clearActiveBufferRegion();
+		//			for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
+		//				outBuffer[sample] = inBuffer[sample] * random.nextFloat() * level;
+		//		}
+		//	}
+		//}
+	*/
 
-	//int start = bufferToFill2.startSample;
-	//int num = bufferToFill2.numSamples;
+	//DBG("fp GNAB");
 
-	//int* ptr = &bufferToFill2.buffer;
+	resamplingAudioSource->getNextAudioBlock(bufferToFill);
 
-	//envelope.applyEnvelopeToBuffer(*bufferToFill2.buffer, start, num);
+	//envelope.applyEnvelopeToBuffer(bufferToFill.buffer, bufferToFill.startSample, bufferToFill.numSamples);
 
-	//bufferToFill2.buffer->reverse(bufferToFill.startSample, bufferToFill.numSamples);
+	bufferToFill.buffer->reverse(bufferToFill.startSample, bufferToFill.numSamples);
+	//bufferToFill.buffer->applyGain(0.1);
+
 
 	/*for (int sample = 0; sample < bufferToFill2.buffer->getNumSamples(); sample++)
 	{
@@ -165,7 +165,7 @@ void FilePlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 	}*/
 	
 
-	resamplingAudioSource->getNextAudioBlock (bufferToFill);
+	
 }
 
 

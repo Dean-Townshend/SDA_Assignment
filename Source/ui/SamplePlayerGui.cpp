@@ -173,11 +173,11 @@ void SamplePlayerGui::timerCallback()
 
 	DBG(filePlayer->getPosition());
 
-	if (filePlayer->getPosition() > filePlayer->getEndPosition())
+	if (filePlayer->isPlaying() == true && filePlayer->getPosition() > filePlayer->getEndPosition())
 	{
 		filePlayer->setPlaying(false);
 		DBG("stopped");
-		Timer::stopTimer();
+		stopTimer();
 	}
 }
 
@@ -195,7 +195,7 @@ void SamplePlayerGui::buttonClicked (Button* button)
 	if (filePlayer != nullptr && filePlayer->isPlaying() == false && button == &padTriggerButton)
 	{
 		DBG("tiggered");
-		Timer::startTimer(25);
+		startTimer(25);
 		filePlayer->setPosition(startPosSlider.getValue());
 		filePlayer->setPlaying(true);
 		
@@ -203,7 +203,8 @@ void SamplePlayerGui::buttonClicked (Button* button)
 
 	if (filePlayer != nullptr && filePlayer->isPlaying() == true && button == &padTriggerButton)
 	{
-		Timer::stopTimer();
+		stopTimer();
+		//filePlayer->setPlaying(false);
 	}
 }
 

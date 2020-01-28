@@ -55,7 +55,6 @@ void WaveformThumbnailComponent::thumbnailChanged()
 	repaint();
 }
 
-
 /************************************Position Overlay************************************************/
 
 PlayheadPositionOverlay::PlayheadPositionOverlay()
