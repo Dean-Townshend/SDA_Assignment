@@ -2,7 +2,11 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-/** Simple FilePlayer class - strams audio from a file. */
+/** Streams audio from a file.
+	
+	For overidden functions, see JUCE framework documentation.
+
+*/
 class FilePlayer :  public AudioSource
 {
 public:
@@ -13,16 +17,22 @@ public:
     /** Destructor */
     ~FilePlayer();
     
-    /** Starts or stops playback of the looper */
+    /** Starts or stops playback of the looper.
+			@param newState used to determine whether to play or stop audioTransportSource
+	*/
     void setPlaying (bool newState);
     
-    /** Gets the current playback state of the looper */
+    /** Gets the current playback state of the audioTransportSource. */
     bool isPlaying() const;
     
-    /** Loads the specified file into the transport source */
+    /** Loads the specified file into the transport source.
+			@param newFile reference to file to be used by audioTransportSource.
+	*/
     void loadFile (const File& newFile);
     
-    //AudioSource
+	/** Overidden, calls resamplingAudioSources' prepareToPlay function.
+
+	*/
     void prepareToPlay (int samplesPerBlockExpected, double sampleRate) override;
     void releaseResources() override;
     void getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill) override;

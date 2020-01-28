@@ -101,7 +101,6 @@ void FilePlayer::setLevel(double levelSliderval)
 void FilePlayer::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
     resamplingAudioSource->prepareToPlay (samplesPerBlockExpected, sampleRate);
-	envelope.setSampleRate(sampleRate);
 }
 
 void FilePlayer::releaseResources()
@@ -163,9 +162,7 @@ void FilePlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 		bufferToFill2.buffer->getSample(1, sample) * levelVal;
 		bufferToFill2.buffer->getSample(0, sample) * levelVal;
 	}*/
-	
-
-	
+		
 }
 
 

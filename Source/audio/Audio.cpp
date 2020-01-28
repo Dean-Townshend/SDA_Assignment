@@ -44,9 +44,9 @@ void Audio::handleIncomingMidiMessage (MidiInput* source, const MidiMessage& mes
 	{
 		DBG( message.getNoteNumber());
 
-		if (message.getNoteNumber() == 60)
+		if (message.getNoteNumber() == 60) //C4 
 		{
-			filePlayer[0].setPlaying(true);
+			filePlayer[0].setPlaying(true); //Middle C is used to start the first filePlayer connected to the C4 pad in GUI 
 		}
 		if (message.getNoteNumber() == 62)
 		{
@@ -111,7 +111,7 @@ void Audio::audioDeviceIOCallback (const float** inputChannelData,
 
 void Audio::audioDeviceAboutToStart (AudioIODevice* device)
 {
-    audioSourcePlayer.audioDeviceAboutToStart (device);
+    audioSourcePlayer.audioDeviceAboutToStart (device); 
 }
 
 void Audio::audioDeviceStopped()
@@ -119,17 +119,15 @@ void Audio::audioDeviceStopped()
     audioSourcePlayer.audioDeviceStopped();
 }
 
-void Audio::setReverbParam (double wetdryLevel)
+void Audio::setReverbParam (double wetdryLevel, double roomSize)
 {
+	verbParams.dryLevel = 1.0 - wetdryLevel; //The dry level goes down as the wetLevel goes up and vice versa
 	verbParams.wetLevel = wetdryLevel;
-	verbParams.dryLevel = 1.0 - wetdryLevel;
-	DBG(verbParams.dryLevel);
-	DBG(verbParams.wetLevel);
-	verbUnit.setParameters(verbParams);
+	verbParams.roomSize = roomSize;
+	verbUnit.setParameters(verbParams); //Update verb unit params
 }
 
 void Audio::setLevel(float levelSliderval)
 {
 	levelVal = levelSliderval;
-	DBG(levelSliderval);
 }
