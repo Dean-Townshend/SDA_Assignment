@@ -11,8 +11,8 @@ Audio::Audio() : verbUnit(&mixer, false)
 
 	//Reverb default param values
 	verbParams.damping = 0.0;
-	verbParams.freezeMode = 0.1;
-	verbParams.roomSize = 0.5;
+	verbParams.freezeMode = 0.0;
+	verbParams.roomSize = 0.0;
 	verbParams.width = 0.5;
 	verbParams.wetLevel = 0.0;
 	verbParams.dryLevel = 1.0;
@@ -124,6 +124,7 @@ void Audio::setReverbParam (double wetdryLevel, double roomSize)
 	verbParams.dryLevel = 1.0 - wetdryLevel; //The dry level goes down as the wetLevel goes up and vice versa
 	verbParams.wetLevel = wetdryLevel;
 	verbParams.roomSize = roomSize;
+	verbParams.freezeMode = 0.0;
 	verbUnit.setParameters(verbParams); //Update verb unit params
 }
 

@@ -171,26 +171,28 @@ void FilePlayerGui::setNameLabelText(String name)
 //Button Listener
 void FilePlayerGui::buttonClicked (Button* button)
 {
-    if (filePlayer != nullptr && button == &padTriggerButton)
+    /*if (filePlayer != nullptr && button == &padTriggerButton)
     {
 		filePlayer->setPosition(startPosSlider.getValue());
 		DBG("tiggered");
         filePlayer->setPlaying( ! filePlayer->isPlaying());
 
-    }
+    }*/
 
-	/*if (filePlayer != nullptr && filePlayer->isPlaying() == false && button == &padTriggerButton)
+	if (filePlayer != nullptr && filePlayer->isPlaying() == false && button == &padTriggerButton)
 	{
 		DBG("tiggered");
 		filePlayer->setPosition(startPosSlider.getValue());
 		filePlayer->setPlaying(true);
+
+		//filePlayer->setPlaying(filePlayer->getPlayState());
 		
 	}
 
-	if (filePlayer != nullptr && filePlayer->isPlaying() == true && button == &padTriggerButton)
-	{
-		
-	}*/
+	//if (filePlayer != nullptr && filePlayer->isPlaying() == true && button == &padTriggerButton)
+	//{
+	//	//filePlayer->setPlaying(false);
+	//}
 }
 
 void FilePlayerGui::setFilePlayer (FilePlayer* fp)

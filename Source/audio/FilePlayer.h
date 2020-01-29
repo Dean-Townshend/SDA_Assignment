@@ -21,6 +21,8 @@ public:
 			@param newState used to determine whether to play or stop audioTransportSource
 	*/
     void setPlaying (bool newState);
+
+	bool getPlayState();
     
     /** Gets the current playback state of the audioTransportSource. */
     bool isPlaying() const;
@@ -79,8 +81,7 @@ private:
 	/** Sets the ADSR samplerate.
 			@param sampleRate used to set the sample rate of the ADSR object.
 	*/
-
-	void setAdsrSampleRate(double sampleRate);
+	void setAdsrSampleRate(double sampleRate); //not implemented yet
 
     std::unique_ptr<AudioFormatReaderSource> currentAudioFileSource;    //reads from the file
     AudioTransportSource audioTransportSource;							//this controls the playback of a positionable audio stream, handling the
@@ -88,12 +89,14 @@ private:
     TimeSliceThread thread;												//thread for the transport source
 	std::unique_ptr<ResamplingAudioSource> resamplingAudioSource;		//Resamples the audioTransportSource
 
-	ADSR envelope;
+	//Not implemented yet
+	ADSR envelope; 
 	ADSR::Parameters envParams;
 
 	double levelVal = 0.5;	//Used for level control of individual file players
 
-
-	int bufferCount;
-	float transportEndPosition = audioTransportSource.getLengthInSeconds(); //Used as transport play threshold
+	//Used for stop process
+	//float bufferCount = 0.0;
+	double transportEndPosition = audioTransportSource.getLengthInSeconds(); //Used as transport play threshold
+	bool playState;
 };

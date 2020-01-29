@@ -20,15 +20,12 @@ void FilePlayer::setPosition(double newPosition)
 
 void FilePlayer::setEndPosition(double endPosition)
 {
-	transportEndPosition = audioTransportSource.getLengthInSeconds() * endPosition;
+	transportEndPosition = audioTransportSource.getLengthInSeconds()* endPosition;
 }
 
 double FilePlayer::getPosition() const
 {
-	//DBG("getposccaled");
-	//DBG(audioTransportSource.getCurrentPosition());
 	return audioTransportSource.getCurrentPosition();
-
 }
 
 double FilePlayer::getEndPosition() const
@@ -52,7 +49,11 @@ void FilePlayer::setPlaying (bool newState)//for start needs cahnging
         audioTransportSource.stop();
     }
 
-	bufferCount = 0;
+}
+
+bool FilePlayer::getPlayState()//for start needs cahnging
+{
+	return playState;
 }
 
 bool FilePlayer::isPlaying () const
@@ -112,17 +113,26 @@ void FilePlayer::releaseResources()
 
 void FilePlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
-	resamplingAudioSource->getNextAudioBlock(bufferToFill);
 
-	bufferCount += bufferToFill.numSamples;
-
-	//if (bufferCount > transportEndPosition)
+	if (audioTransportSource.getCurrentPosition() >= transportEndPosition)
 	{
-		//audioTransportSource.stop();
+		//audioTransportSource.setGain(0.5);
+		audioTransportSource.stop();
+		playState = false;
+		bufferToFill.buffer->clear();
 	}
 
+	resamplingAudioSource->getNextAudioBlock(bufferToFill);
+
 	//bufferToFill.buffer->reverse(bufferToFill.startSample, bufferToFill.numSamples);
-	//bufferToFill.buffer->applyGain(0.1);	
+	//bufferToFill.buffer->applyGain(0.5);	
+	if (audioTransportSource.getCurrentPosition() >= transportEndPosition)
+	{
+		//audioTransportSource.setGain(0.5);
+		audioTransportSource.stop();
+		playState = false;
+		bufferToFill.buffer->clear();
+	}
 }
 
 
