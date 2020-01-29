@@ -26,7 +26,7 @@ void FilePlayer::setEndPosition(double endPosition)
 double FilePlayer::getPosition() const
 {
 	//DBG("getposccaled");
-	DBG(audioTransportSource.getCurrentPosition());
+	//DBG(audioTransportSource.getCurrentPosition());
 	return audioTransportSource.getCurrentPosition();
 
 }
@@ -51,6 +51,8 @@ void FilePlayer::setPlaying (bool newState)//for start needs cahnging
     {
         audioTransportSource.stop();
     }
+
+	bufferCount = 0;
 }
 
 bool FilePlayer::isPlaying () const
@@ -95,7 +97,7 @@ void FilePlayer::setPlaybackRate(double newRate)
 void FilePlayer::setLevel(double levelSliderval)
 {
 	audioTransportSource.setGain(levelSliderval);
-	DBG(levelSliderval);
+	//DBG(levelSliderval);
 }
 
 void FilePlayer::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
@@ -112,9 +114,14 @@ void FilePlayer::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFill)
 {
 	resamplingAudioSource->getNextAudioBlock(bufferToFill);
 
-	//envelope.applyEnvelopeToBuffer(bufferToFill.buffer, bufferToFill.startSample, bufferToFill.numSamples);
+	bufferCount += bufferToFill.numSamples;
 
-	bufferToFill.buffer->reverse(bufferToFill.startSample, bufferToFill.numSamples);
+	//if (bufferCount > transportEndPosition)
+	{
+		//audioTransportSource.stop();
+	}
+
+	//bufferToFill.buffer->reverse(bufferToFill.startSample, bufferToFill.numSamples);
 	//bufferToFill.buffer->applyGain(0.1);	
 }
 

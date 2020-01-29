@@ -18,9 +18,24 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 	verbSlider.setNumDecimalPlacesToDisplay(3);
 	//Verb Label
 	addAndMakeVisible(verbSliderLabel);
-	verbSliderLabel.setText("Reverb:", dontSendNotification);
+	verbSliderLabel.setText("Reverb Wet/Dry:", dontSendNotification);
 	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
 	verbSliderLabel.setColour(Label::textColourId, Colours::darkslategrey);
+
+	//Reverb slider
+	verbSizeSlider.addListener(this);
+	addAndMakeVisible(verbSizeSlider);
+	verbSizeSlider.setSliderStyle(Slider::LinearHorizontal);
+	verbSizeSlider.setColour(Slider::thumbColourId, Colours::darkslategrey);
+	verbSizeSlider.setRange(0.0, 1.0);
+	verbSizeSlider.setValue(0.0);
+	verbSizeSlider.setTextValueSuffix(" *");
+	verbSizeSlider.setNumDecimalPlacesToDisplay(3);
+	//Verb Label
+	addAndMakeVisible(verbSizeSliderLabel);
+	verbSizeSliderLabel.setText("Reverb Size:", dontSendNotification);
+	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
+	verbSizeSliderLabel.setColour(Label::textColourId, Colours::darkslategrey);
 	
 	//Level slider
 	levelSlider.addListener(this);
@@ -111,11 +126,20 @@ void MainComponent::resized()
 	Rectangle<int> masterControls = guiArea;
 
 	Rectangle<int> reverb = masterControls.removeFromTop(masterControls.getHeight() / 2);
-	Rectangle<int> reverbSlider = reverb.removeFromRight(reverb.getWidth() * 0.7);
-	Rectangle<int> reverbLabel = reverb;
+	
+	Rectangle<int> reverbAmmount = reverb.removeFromTop(reverb.getHeight() * 0.5);
+	Rectangle<int> reverbSlider = reverbAmmount.removeFromRight(reverb.getWidth() * 0.7);
+	Rectangle<int> reverbLabel = reverbAmmount;
+
+	Rectangle<int> reverbSize = reverb;
+	Rectangle<int> reverbSizeSlider = reverbSize.removeFromRight(reverb.getWidth() * 0.7);
+	Rectangle<int> reverbSizeLabel = reverbSize;
 
 	verbSlider.setBounds(reverbSlider);
 	verbSliderLabel.setBounds(reverbLabel);
+
+	verbSizeSlider.setBounds(reverbSizeSlider);
+	verbSizeSliderLabel.setBounds(reverbSizeLabel);
 
 	Rectangle<int> level = masterControls;
 	Rectangle<int> levelSliderArea = level.removeFromRight(level.getWidth() * 0.7);
@@ -125,7 +149,7 @@ void MainComponent::resized()
 	levelSliderLabel.setBounds(levelLabel);
 }
 
-//MenuBarCallbacks==============================================================
+//MenuBarCallbacks
 StringArray MainComponent::getMenuBarNames()
 {
     const char* const names[] = { "File", 0 };
@@ -208,10 +232,14 @@ void MainComponent::sliderValueChanged(Slider* slider)
 {
 	if (slider == &verbSlider)
 	{
-		audio.setReverbParam(verbSlider.getValue(), 0.5);
+		audio.setReverbParam(verbSlider.getValue(), verbSizeSlider.getValue());
 	}
 	if (slider == &levelSlider)
 	{
 		audio.setLevel(levelSlider.getValue());
+	}
+	if (slider == &verbSizeSlider)
+	{
+		audio.setReverbParam(verbSlider.getValue(), verbSizeSlider.getValue());
 	}
 }

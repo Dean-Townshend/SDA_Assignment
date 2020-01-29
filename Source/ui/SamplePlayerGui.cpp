@@ -168,34 +168,20 @@ void FilePlayerGui::setNameLabelText(String name)
 	currentPadLabel.setText(name, dontSendNotification);
 }
 
-void FilePlayerGui::timerCallback()
-{
-
-	DBG(filePlayer->getPosition());
-
-	if (filePlayer->isPlaying() == true && filePlayer->getPosition() > filePlayer->getEndPosition())
-	{
-		filePlayer->setPlaying(false);
-		DBG("stopped");
-		stopTimer();
-	}
-}
-
 //Button Listener
 void FilePlayerGui::buttonClicked (Button* button)
 {
-    /*if (filePlayer != nullptr && button == &padTriggerButton)
+    if (filePlayer != nullptr && button == &padTriggerButton)
     {
 		filePlayer->setPosition(startPosSlider.getValue());
 		DBG("tiggered");
         filePlayer->setPlaying( ! filePlayer->isPlaying());
 
-    }*/
+    }
 
-	if (filePlayer != nullptr && filePlayer->isPlaying() == false && button == &padTriggerButton)
+	/*if (filePlayer != nullptr && filePlayer->isPlaying() == false && button == &padTriggerButton)
 	{
 		DBG("tiggered");
-		startTimer(25);
 		filePlayer->setPosition(startPosSlider.getValue());
 		filePlayer->setPlaying(true);
 		
@@ -203,9 +189,8 @@ void FilePlayerGui::buttonClicked (Button* button)
 
 	if (filePlayer != nullptr && filePlayer->isPlaying() == true && button == &padTriggerButton)
 	{
-		stopTimer();
-		//filePlayer->setPlaying(false);
-	}
+		
+	}*/
 }
 
 void FilePlayerGui::setFilePlayer (FilePlayer* fp)

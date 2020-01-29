@@ -93,5 +93,7 @@ private:
 
 	double levelVal = 0.5;	//Used for level control of individual file players
 
+
+	int bufferCount;
 	float transportEndPosition = audioTransportSource.getLengthInSeconds(); //Used as transport play threshold
 };

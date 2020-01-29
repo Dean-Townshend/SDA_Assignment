@@ -69,8 +69,11 @@ private:
 	std::array <FilePlayerGui, Audio::NumOfFilePlayers> PadControlsGui;
 
 	//GUI components 
+	Slider verbSizeSlider;
+	Label verbSizeSliderLabel;
 	Slider verbSlider;
 	Label verbSliderLabel;
+
 	Slider levelSlider;
 	Label levelSliderLabel;
 	std::array <TextButton, 8> padButton;

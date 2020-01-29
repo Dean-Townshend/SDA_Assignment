@@ -7,7 +7,6 @@
 
 /** Gui for the FilePlayer class */
 class FilePlayerGui : public  Component,
-					  public  Timer,
                       private Button::Listener,
                       private FilenameComponentListener,
 					  private Slider::Listener
@@ -22,7 +21,6 @@ public:
     /** Destructor */
     ~FilePlayerGui();
     
-
     void setFilePlayer (FilePlayer* fp);
 
 	void setNameLabelText(String name);
@@ -30,8 +28,6 @@ public:
 	void paint(Graphics& g) override;
     
     void resized() override;
-
-	void timerCallback()override;
 
 private:
 
