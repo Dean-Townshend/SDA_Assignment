@@ -10,8 +10,9 @@ thumbnailComp(512, formatManager, thumbnailCache)
 
 	//Note name label
 	currentPadLabel.setText("Note", dontSendNotification);
-	currentPadLabel.setColour(Label::textColourId, Colours::darkslategrey);
-	currentPadLabel.setColour(Label::outlineColourId, Colours::darkslategrey);
+	//currentPadLabel.setColour(Label::textColourId, Colours::darkslategrey);
+    currentPadLabel.setColour(Label::outlineColourId, Colours::darkred);
+    currentPadLabel.setColour(Label::backgroundColourId, Colours::darkslategrey);
 	currentPadLabel.setJustificationType(Justification::centred);
 	addAndMakeVisible(currentPadLabel);
 
@@ -94,11 +95,6 @@ thumbnailComp(512, formatManager, thumbnailCache)
 FilePlayerGui::~FilePlayerGui()
 {
     
-}
-
-void FilePlayerGui::paint(Graphics& g)
-{
-
 }
 
 //Layout of components

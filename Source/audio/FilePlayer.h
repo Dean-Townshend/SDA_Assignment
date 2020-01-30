@@ -4,7 +4,10 @@
 
 /** Streams audio from a file.
 	
-	For overidden functions, see JUCE framework documentation.
+ 
+    @see SamplePlayerGui
+ 
+    For overidden functions, see JUCE framework documentation.
 
 */
 class FilePlayer :  public AudioSource

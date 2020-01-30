@@ -16,7 +16,7 @@ class MainComponent   : public Component,
 public:
 
 	//This array is used to set the names of the button pads
-	std::array<String, 9 > notes = { "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "\0" };
+	std::array<String, 16 > notes = { "C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E6", "F6", "G6", "A6", "B7", "C8",  "\0" };
 
     /** Constructor */
 	MainComponent(Audio& a);
@@ -73,7 +73,6 @@ private:
 	Label verbSizeSliderLabel;
 	Slider verbSlider;
 	Label verbSliderLabel;
-
 	Slider levelSlider;
 	Label levelSliderLabel;
 	std::array <TextButton, 8> padButton;

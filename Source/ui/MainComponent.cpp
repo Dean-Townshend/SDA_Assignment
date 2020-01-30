@@ -33,7 +33,7 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 	verbSizeSlider.setNumDecimalPlacesToDisplay(3);
 	//Verb Label
 	addAndMakeVisible(verbSizeSliderLabel);
-	verbSizeSliderLabel.setText("Reverb Size:", dontSendNotification);
+	verbSizeSliderLabel.setText("Reverb Room Size:", dontSendNotification);
 	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
 	verbSizeSliderLabel.setColour(Label::textColourId, Colours::darkslategrey);
 	
@@ -48,7 +48,7 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 	levelSlider.setNumDecimalPlacesToDisplay(3);
 	levelSlider.setValue(0.5);
 	//Level slider label
-	levelSliderLabel.setText("Volume:", dontSendNotification);
+	levelSliderLabel.setText("Master Level:", dontSendNotification);
 	//startPosSliderLabel.attachToComponent(&startPosSlider, true);
 	levelSliderLabel.setColour(Label::textColourId, Colours::darkslategrey);
 	addAndMakeVisible(levelSliderLabel);
@@ -66,6 +66,7 @@ MainComponent::MainComponent (Audio& a) : audio (a)
 	{
 		PadControlsGui[i].setNameLabelText(notes[i]);
 	}
+    
 
     setSize (600, 600);
 }

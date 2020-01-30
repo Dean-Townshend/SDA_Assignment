@@ -3,17 +3,20 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 //#include <string>
 
-
+/** This class is responible for displaying a waveform view of the files loaded into file player
+    @see FilePlayer
+ */
 class WaveformThumbnailComponent : public Component,
 								   private ChangeListener
 {
 
 public:
-
+    
+    /** Constructor */
 	WaveformThumbnailComponent (int sourceSamplesPerThumbnailSample,
 								 AudioFormatManager& formatManager,
 								 AudioThumbnailCache& cache);
-
+    /** Destructor */
 	~WaveformThumbnailComponent();
 
 	/** Sets the file that will be displayed.
@@ -46,19 +49,18 @@ private:
 	AudioThumbnail thumbnail;
 };
 
-
-/*****************************************Playhead Overlay**********************************************/
-
+/** This class is responible for displaying start and end locators over the waveform view image
+ @see WaveformThumbnailComponent
+ */
 class PlayheadPositionOverlay : public Component,
 								public Timer
 {
 
 public:
-
-	//double position = 0;
-
+    /** Constructor */
 	PlayheadPositionOverlay();
 	
+    /** Destructor */
 	~PlayheadPositionOverlay();
 	
 	/** Sets the position of the play head overlay.

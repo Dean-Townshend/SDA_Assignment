@@ -4,9 +4,11 @@
 #include <array>
 
 /** Class responsible for all of the audio processes.
-
+ 
 		This Classs runs on a high priority thread required 
-		to maintain clean audio, therefore GUI processes should not be perfomed here.	
+		to maintain clean audio, therefore GUI processes should not be perfomed here.
+ 
+        For overidden functions, see JUCE framework documentation.
 */
 class Audio : public MidiInputCallback, 
 					 AudioIODeviceCallback
