@@ -1,3 +1,5 @@
+![image](https://user-images.githubusercontent.com/38728500/129430235-a5986075-52ae-4767-a37a-97f8943433dd.png)
+
 User Manual
 
 The application consists of three major sections, a grid of sample pads, a dynamic pad controls section and a set of master audio controls.
